@@ -19,6 +19,7 @@
         "./skills/gh-project-orchestrator",
         "./skills/pr-commenter",
         "./skills/pr-feedback-handler",
+        "./skills/pr-initiative-driver",
         "./skills/pr-labeler",
         "./skills/pr-manager",
         "./skills/pr-merger",

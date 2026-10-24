@@ -25,38 +25,38 @@
 <!-- mgr -->
 <g id="node2" class="node">
 <title>mgr</title>
-<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.6" points="718.52,-1272.35 603.48,-1272.35 599.48,-1268.35 599.48,-1234.95 714.52,-1234.95 718.52,-1238.95 718.52,-1272.35"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="714.52,-1268.35 599.48,-1268.35"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="714.52,-1268.35 714.52,-1234.95"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="714.52,-1268.35 718.52,-1272.35"/>
-<text xml:space="preserve" text-anchor="start" x="622.25" y="-1253.8" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">pr&#45;manager</text>
-<text xml:space="preserve" text-anchor="start" x="611" y="-1243.65" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">one lane per PR · ~1s</text>
+<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.6" points="644.52,-1272.35 529.48,-1272.35 525.48,-1268.35 525.48,-1234.95 640.52,-1234.95 644.52,-1238.95 644.52,-1272.35"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="640.52,-1268.35 525.48,-1268.35"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="640.52,-1268.35 640.52,-1234.95"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="640.52,-1268.35 644.52,-1272.35"/>
+<text xml:space="preserve" text-anchor="start" x="548.25" y="-1253.8" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">pr&#45;manager</text>
+<text xml:space="preserve" text-anchor="start" x="537" y="-1243.65" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">one lane per PR · ~1s</text>
 </g>
 <!-- queue&#45;&gt;mgr -->
 <g id="edge14" class="edge">
 <title>queue&#45;&gt;mgr</title>
-<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M741.65,-1328.99C725.57,-1314.53 702.99,-1294.22 685.5,-1278.49"/>
-<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="687.5,-1276.99 680.66,-1274.13 684.22,-1280.63 687.5,-1276.99"/>
-<text xml:space="preserve" text-anchor="middle" x="741.04" y="-1297.1" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6b7280"> 20+ lanes </text>
+<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M726.61,-1328.77C698.15,-1313.88 658.06,-1292.89 627.8,-1277.05"/>
+<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="629.28,-1275.06 621.94,-1273.99 627.01,-1279.4 629.28,-1275.06"/>
+<text xml:space="preserve" text-anchor="middle" x="708.47" y="-1297.1" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6b7280"> 20+ lanes </text>
 </g>
 <!-- orch -->
 <g id="node3" class="node">
 <title>orch</title>
-<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.6" points="579.02,-1187.95 400.98,-1187.95 396.98,-1183.95 396.98,-1150.55 575.02,-1150.55 579.02,-1154.55 579.02,-1187.95"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="575.02,-1183.95 396.98,-1183.95"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="575.02,-1183.95 575.02,-1150.55"/>
-<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="575.02,-1183.95 579.02,-1187.95"/>
-<text xml:space="preserve" text-anchor="start" x="408.5" y="-1169.4" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">pr&#45;workflow&#45;orchestrator</text>
-<text xml:space="preserve" text-anchor="start" x="439.25" y="-1159.25" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">the line manager · ~1s</text>
+<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.6" points="402.02,-1187.95 223.98,-1187.95 219.98,-1183.95 219.98,-1150.55 398.02,-1150.55 402.02,-1154.55 402.02,-1187.95"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="398.02,-1183.95 219.98,-1183.95"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="398.02,-1183.95 398.02,-1150.55"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="398.02,-1183.95 402.02,-1187.95"/>
+<text xml:space="preserve" text-anchor="start" x="231.5" y="-1169.4" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">pr&#45;workflow&#45;orchestrator</text>
+<text xml:space="preserve" text-anchor="start" x="262.25" y="-1159.25" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">the line manager · ~1s</text>
 </g>
 <!-- mgr&#45;&gt;orch -->
 <g id="edge15" class="edge">
 <title>mgr&#45;&gt;orch</title>
-<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M620.62,-1234.16C594.99,-1221.81 561.14,-1205.49 534.06,-1192.44"/>
-<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="535.25,-1190.3 527.88,-1189.47 533.13,-1194.71 535.25,-1190.3"/>
+<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M524.87,-1234.57C482.4,-1221.79 425.35,-1204.64 380.85,-1191.26"/>
+<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="381.56,-1188.91 374.15,-1189.24 380.15,-1193.6 381.56,-1188.91"/>
 </g>
 <!-- wt -->
-<g id="node8" class="node">
+<g id="node9" class="node">
 <title>wt</title>
 <path fill="#fff7ed" stroke="#f97316" stroke-width="1.6" d="M243.15,-1079.55C243.15,-1079.55 142.85,-1079.55 142.85,-1079.55 136.85,-1079.55 130.85,-1073.55 130.85,-1067.55 130.85,-1067.55 130.85,-1054.15 130.85,-1054.15 130.85,-1048.15 136.85,-1042.15 142.85,-1042.15 142.85,-1042.15 243.15,-1042.15 243.15,-1042.15 249.15,-1042.15 255.15,-1048.15 255.15,-1054.15 255.15,-1054.15 255.15,-1067.55 255.15,-1067.55 255.15,-1073.55 249.15,-1079.55 243.15,-1079.55"/>
 <text xml:space="preserve" text-anchor="start" x="142.38" y="-1061" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Isolate the work</text>
@@ -65,9 +65,9 @@
 <!-- orch&#45;&gt;wt -->
 <g id="edge16" class="edge">
 <title>orch&#45;&gt;wt</title>
-<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M436.95,-1149.84C385.5,-1131.28 306.17,-1102.67 252.05,-1083.15"/>
-<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="253.04,-1080.9 245.63,-1080.83 251.38,-1085.51 253.04,-1080.9"/>
-<text xml:space="preserve" text-anchor="middle" x="388.3" y="-1118.05" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6b7280"> dispatch </text>
+<path fill="none" stroke="#9ca3af" stroke-width="1.2" d="M290.72,-1149.96C271.13,-1132.3 241.35,-1105.45 219.81,-1086.03"/>
+<polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="221.6,-1084.34 214.76,-1081.47 218.32,-1087.98 221.6,-1084.34"/>
+<text xml:space="preserve" text-anchor="middle" x="283.94" y="-1118.05" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6b7280"> dispatch </text>
 </g>
 <!-- proj -->
 <g id="node4" class="node">
@@ -103,34 +103,51 @@
 <text xml:space="preserve" text-anchor="start" x="537.12" y="-1338.3" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#047857">read&#45;only queue view · ~5s</text>
 </g>
 <!-- digest&#45;&gt;queue -->
-<g id="edge19" class="edge">
+<g id="edge20" class="edge">
 <title>digest&#45;&gt;queue</title>
 <path fill="none" stroke="#10b981" stroke-width="1.2" stroke-dasharray="5,2" d="M667.04,-1348.3C678.93,-1348.3 694.46,-1348.3 704.67,-1348.3"/>
 <polygon fill="#10b981" stroke="#10b981" stroke-width="1.2" points="704.64,-1350.75 711.64,-1348.3 704.64,-1345.85 704.64,-1350.75"/>
 </g>
-<!-- btns -->
+<!-- driver -->
 <g id="node7" class="node">
+<title>driver</title>
+<polygon fill="#f5f3ff" stroke="#7c3aed" stroke-width="1.6" points="450.89,-1272.35 305.11,-1272.35 301.11,-1268.35 301.11,-1234.95 446.89,-1234.95 450.89,-1238.95 450.89,-1272.35"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="446.89,-1268.35 301.11,-1268.35"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="446.89,-1268.35 446.89,-1234.95"/>
+<polyline fill="none" stroke="#7c3aed" stroke-width="1.6" points="446.89,-1268.35 450.89,-1272.35"/>
+<text xml:space="preserve" text-anchor="start" x="318.62" y="-1253.8" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">pr&#45;initiative&#45;driver</text>
+<text xml:space="preserve" text-anchor="start" x="312.62" y="-1243.65" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">repeating cycle · every ~10m</text>
+</g>
+<!-- driver&#45;&gt;mgr -->
+<g id="edge19" class="edge">
+<title>driver&#45;&gt;mgr</title>
+<path fill="none" stroke="#7c3aed" stroke-width="1.2" stroke-dasharray="5,2" d="M451.45,-1253.65C472.53,-1253.65 495.32,-1253.65 516,-1253.65"/>
+<polygon fill="#7c3aed" stroke="#7c3aed" stroke-width="1.2" points="515.91,-1256.1 522.91,-1253.65 515.91,-1251.2 515.91,-1256.1"/>
+<text xml:space="preserve" text-anchor="middle" x="488.19" y="-1258.4" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9"> next cycle </text>
+</g>
+<!-- btns -->
+<g id="node8" class="node">
 <title>btns</title>
 <path fill="#f3f4f6" stroke="#9ca3af" stroke-width="1.6" d="M153.64,-1367C153.64,-1367 20.36,-1367 20.36,-1367 14.36,-1367 8.36,-1361 8.36,-1355 8.36,-1355 8.36,-1341.6 8.36,-1341.6 8.36,-1335.6 14.36,-1329.6 20.36,-1329.6 20.36,-1329.6 153.64,-1329.6 153.64,-1329.6 159.64,-1329.6 165.64,-1335.6 165.64,-1341.6 165.64,-1341.6 165.64,-1355 165.64,-1355 165.64,-1361 159.64,-1367 153.64,-1367"/>
 <text xml:space="preserve" text-anchor="start" x="19.88" y="-1348.45" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">gh&#45;pr&#45;review&#45;buttons</text>
 <text xml:space="preserve" text-anchor="start" x="25.88" y="-1338.3" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#4b5563">AI review badges · one&#45;time</text>
 </g>
 <!-- open -->
-<g id="node10" class="node">
+<g id="node11" class="node">
 <title>open</title>
 <path fill="#fff7ed" stroke="#f97316" stroke-width="1.6" d="M183.64,-910.75C183.64,-910.75 104.36,-910.75 104.36,-910.75 98.36,-910.75 92.36,-904.75 92.36,-898.75 92.36,-898.75 92.36,-885.35 92.36,-885.35 92.36,-879.35 98.36,-873.35 104.36,-873.35 104.36,-873.35 183.64,-873.35 183.64,-873.35 189.64,-873.35 195.64,-879.35 195.64,-885.35 195.64,-885.35 195.64,-898.75 195.64,-898.75 195.64,-904.75 189.64,-910.75 183.64,-910.75"/>
 <text xml:space="preserve" text-anchor="start" x="103.88" y="-892.2" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Open the PR</text>
 <text xml:space="preserve" text-anchor="start" x="108.38" y="-882.05" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#9a3412">pr&#45;opener · ~10s</text>
 </g>
 <!-- btns&#45;&gt;open -->
-<g id="edge20" class="edge">
+<g id="edge21" class="edge">
 <title>btns&#45;&gt;open</title>
 <path fill="none" stroke="#9ca3af" stroke-width="1.2" stroke-dasharray="5,2" d="M87,-1328.99C87,-1301.99 87,-1254.65 87,-1254.65 87,-1254.65 87,-1254.65 87,-975.45 87,-975.45 109.63,-942.73 126.37,-918.53"/>
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="128.35,-919.98 130.32,-912.83 124.32,-917.19 128.35,-919.98"/>
 <text xml:space="preserve" text-anchor="middle" x="129.38" y="-1118.05" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6b7280"> badges on the PR </text>
 </g>
 <!-- impl -->
-<g id="node9" class="node">
+<g id="node10" class="node">
 <title>impl</title>
 <path fill="#fff7ed" stroke="#f97316" stroke-width="1.6" d="M229.64,-995.15C229.64,-995.15 138.36,-995.15 138.36,-995.15 132.36,-995.15 126.36,-989.15 126.36,-983.15 126.36,-983.15 126.36,-969.75 126.36,-969.75 126.36,-963.75 132.35,-957.75 138.35,-957.75 138.35,-957.75 229.64,-957.75 229.64,-957.75 235.64,-957.75 241.64,-963.75 241.64,-969.75 241.64,-969.75 241.64,-983.15 241.64,-983.15 241.64,-989.15 235.64,-995.15 229.64,-995.15"/>
 <text xml:space="preserve" text-anchor="start" x="137.88" y="-976.6" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Write the code</text>
@@ -149,7 +166,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="158.91,-918.15 153.65,-912.92 154.5,-920.29 158.91,-918.15"/>
 </g>
 <!-- lab -->
-<g id="node11" class="node">
+<g id="node12" class="node">
 <title>lab</title>
 <path fill="#fff7ed" stroke="#f97316" stroke-width="1.6" d="M184.02,-826.35C184.02,-826.35 103.98,-826.35 103.98,-826.35 97.98,-826.35 91.98,-820.35 91.98,-814.35 91.98,-814.35 91.98,-800.95 91.98,-800.95 91.98,-794.95 97.98,-788.95 103.98,-788.95 103.98,-788.95 184.02,-788.95 184.02,-788.95 190.02,-788.95 196.02,-794.95 196.02,-800.95 196.02,-800.95 196.02,-814.35 196.02,-814.35 196.02,-820.35 190.02,-826.35 184.02,-826.35"/>
 <text xml:space="preserve" text-anchor="start" x="103.5" y="-807.8" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Label it right</text>
@@ -162,7 +179,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="146.45,-835.7 144,-828.7 141.55,-835.7 146.45,-835.7"/>
 </g>
 <!-- ci -->
-<g id="node12" class="node pulse">
+<g id="node13" class="node pulse">
 <title>ci</title>
 <path fill="#fef9c3" stroke="#eab308" stroke-width="1.8" d="M132.48,-738.58C132.48,-738.58 27.48,-707.91 27.48,-707.91 21.72,-706.23 21.72,-702.87 27.48,-701.18 27.48,-701.18 132.48,-670.51 132.48,-670.51 138.24,-668.83 149.76,-668.83 155.52,-670.51 155.52,-670.51 260.52,-701.18 260.52,-701.18 266.28,-702.87 266.28,-706.23 260.52,-707.91 260.52,-707.91 155.52,-738.58 155.52,-738.58 149.76,-740.27 138.24,-740.27 132.48,-738.58"/>
 <text xml:space="preserve" text-anchor="start" x="91.5" y="-704.7" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Pass the checks</text>
@@ -175,7 +192,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="146.45,-751.55 144,-744.55 141.55,-751.55 146.45,-751.55"/>
 </g>
 <!-- rev -->
-<g id="node13" class="node pulse">
+<g id="node14" class="node pulse">
 <title>rev</title>
 <path fill="#fef9c3" stroke="#eab308" stroke-width="1.8" d="M132.69,-616.14C132.69,-616.14 49.77,-586.76 49.77,-586.76 44.12,-584.75 44.12,-580.75 49.77,-578.74 49.77,-578.74 132.69,-549.36 132.69,-549.36 138.34,-547.35 149.66,-547.35 155.31,-549.36 155.31,-549.36 238.23,-578.74 238.23,-578.74 243.88,-580.75 243.88,-584.75 238.23,-586.76 238.23,-586.76 155.31,-616.14 155.31,-616.14 149.66,-618.15 138.34,-618.15 132.69,-616.14"/>
 <text xml:space="preserve" text-anchor="start" x="102.75" y="-582.9" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Get reviewed</text>
@@ -188,7 +205,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="146.45,-629.79 144,-622.79 141.55,-629.79 146.45,-629.79"/>
 </g>
 <!-- fb -->
-<g id="node14" class="node pulse">
+<g id="node15" class="node pulse">
 <title>fb</title>
 <path fill="#fee2e2" stroke="#ef4444" stroke-width="1.6" d="M283.14,-403.7C283.14,-403.7 152.86,-403.7 152.86,-403.7 146.86,-403.7 140.86,-397.7 140.86,-391.7 140.86,-391.7 140.86,-378.3 140.86,-378.3 140.86,-372.3 146.86,-366.3 152.86,-366.3 152.86,-366.3 283.14,-366.3 283.14,-366.3 289.14,-366.3 295.14,-372.3 295.14,-378.3 295.14,-378.3 295.14,-391.7 295.14,-391.7 295.14,-397.7 289.14,-403.7 283.14,-403.7"/>
 <text xml:space="preserve" text-anchor="start" x="152.38" y="-385.15" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Handle the feedback</text>
@@ -209,7 +226,7 @@
 <text xml:space="preserve" text-anchor="middle" x="95.75" y="-465.52" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#dc2626"> changes requested </text>
 </g>
 <!-- cmt -->
-<g id="node15" class="node">
+<g id="node16" class="node">
 <title>cmt</title>
 <path fill="#fee2e2" stroke="#ef4444" stroke-width="1.6" d="M271.89,-488.1C271.89,-488.1 164.11,-488.1 164.11,-488.1 158.11,-488.1 152.11,-482.1 152.11,-476.1 152.11,-476.1 152.11,-462.7 152.11,-462.7 152.11,-456.7 158.11,-450.7 164.11,-450.7 164.11,-450.7 271.89,-450.7 271.89,-450.7 277.89,-450.7 283.89,-456.7 283.89,-462.7 283.89,-462.7 283.89,-476.1 283.89,-476.1 283.89,-482.1 277.89,-488.1 271.89,-488.1"/>
 <text xml:space="preserve" text-anchor="start" x="163.62" y="-469.55" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Answer in thread</text>
@@ -230,7 +247,7 @@
 <text xml:space="preserve" text-anchor="middle" x="328.27" y="-700.67" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#dc2626"> fix and push </text>
 </g>
 <!-- mrg -->
-<g id="node16" class="node pulse">
+<g id="node17" class="node pulse">
 <title>mrg</title>
 <polygon fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" points="270.02,-309.05 169.98,-309.05 165.98,-305.05 165.98,-271.65 266.02,-271.65 270.02,-275.65 270.02,-309.05"/>
 <polyline fill="none" stroke="#10b981" stroke-width="1.6" points="266.02,-305.05 165.98,-305.05"/>
@@ -253,7 +270,7 @@
 <polygon fill="#f87171" stroke="#f87171" stroke-width="1.2" points="220.45,-413.05 218,-406.05 215.55,-413.05 220.45,-413.05"/>
 </g>
 <!-- clean -->
-<g id="node17" class="node pulse">
+<g id="node18" class="node pulse">
 <title>clean</title>
 <path fill="#ecfdf5" stroke="#10b981" stroke-width="1.6" d="M269.64,-224.65C269.64,-224.65 166.36,-224.65 166.36,-224.65 160.36,-224.65 154.36,-218.65 154.36,-212.65 154.36,-212.65 154.36,-199.25 154.36,-199.25 154.36,-193.25 160.36,-187.25 166.36,-187.25 166.36,-187.25 269.64,-187.25 269.64,-187.25 275.64,-187.25 281.64,-193.25 281.64,-199.25 281.64,-199.25 281.64,-212.65 281.64,-212.65 281.64,-218.65 275.64,-224.65 269.64,-224.65"/>
 <text xml:space="preserve" text-anchor="start" x="189.5" y="-206.1" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Clean up</text>
@@ -266,7 +283,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="220.45,-234 218,-227 215.55,-234 220.45,-234"/>
 </g>
 <!-- done -->
-<g id="node18" class="node pulse">
+<g id="node19" class="node pulse">
 <title>done</title>
 <path fill="#d1fae5" stroke="#10b981" stroke-width="2" d="M309.11,-107.67C309.11,-107.67 309.11,-115.58 309.11,-115.58 309.11,-119.53 305.34,-124.67 301.57,-125.85 301.57,-125.85 263.28,-137.88 263.28,-137.88 259.51,-139.06 251.79,-140.25 247.83,-140.25 247.83,-140.25 188.17,-140.25 188.17,-140.25 184.21,-140.25 176.49,-139.06 172.72,-137.88 172.72,-137.88 134.43,-125.85 134.43,-125.85 130.66,-124.67 126.89,-119.53 126.89,-115.58 126.89,-115.58 126.89,-107.67 126.89,-107.67 126.89,-103.72 130.66,-98.58 134.43,-97.4 134.43,-97.4 172.72,-85.37 172.72,-85.37 176.49,-84.18 184.21,-83 188.17,-83 188.17,-83 247.83,-83 247.83,-83 251.79,-83 259.51,-84.18 263.28,-85.37 263.28,-85.37 301.57,-97.4 301.57,-97.4 305.34,-98.58 309.11,-103.72 309.11,-107.67"/>
 <text xml:space="preserve" text-anchor="start" x="191.38" y="-111.77" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">Shipped</text>
@@ -279,7 +296,7 @@
 <polygon fill="#9ca3af" stroke="#9ca3af" stroke-width="1.2" points="220.45,-149.82 218,-142.82 215.55,-149.82 220.45,-149.82"/>
 </g>
 <!-- promise -->
-<g id="node19" class="node">
+<g id="node20" class="node">
 <title>promise</title>
 <path fill="none" stroke="none" stroke-width="1.6" d="M355.14,-36C355.14,-36 80.86,-36 80.86,-36 74.86,-36 68.85,-30 68.85,-24 68.85,-24 68.85,-12 68.85,-12 68.85,-6 74.85,0 80.85,0 80.85,0 355.14,0 355.14,0 361.14,0 367.14,-6 367.14,-12 367.14,-12 367.14,-24 367.14,-24 367.14,-30 361.14,-36 355.14,-36"/>
 <text xml:space="preserve" text-anchor="start" x="140.75" y="-19.05" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="11.00" fill="#047857">Every PR ends the same way:</text>

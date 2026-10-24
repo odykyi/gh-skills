@@ -26,7 +26,7 @@ skills/
   pr-workflow-orchestrator/SKILL.md   # entry point, one PR end to end
   pr-manager/SKILL.md                 # the same loop at 20+ PRs
   pr-worktree/SKILL.md                # isolation
-  pr-opener/… pr-reviewer/… pr-feedback-handler/… pr-commenter/… pr-labeler/… pr-merger/… pr-queue-digest/
+  pr-opener/… pr-reviewer/… pr-feedback-handler/… pr-commenter/… pr-labeler/… pr-merger/… pr-queue-digest/… pr-initiative-driver/
   gh-project-orchestrator/… gh-prioritizer/… gh-pr-review-buttons/
 rules/AGENTS.github.md                # drop-in rules for a repo that uses these skills
 template/skill-template.md          # starting point for a new skill

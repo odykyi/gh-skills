@@ -31,6 +31,8 @@ digraph SKILL_FACTORY {
         fillcolor="#ECFDF5", color="#059669"];
   digest [label=<<b>pr-queue-digest</b><br/><font point-size="10" color="#047857">read-only queue view · ~5s</font>>,
         fillcolor="#ECFDF5", color="#059669"];
+  driver [label=<<b>pr-initiative-driver</b><br/><font point-size="10" color="#6D28D9">repeating cycle · every ~10m</font>>,
+        shape=box3d, fillcolor="#F5F3FF", color="#7C3AED"];
   btns [label=<<b>gh-pr-review-buttons</b><br/><font point-size="10" color="#4B5563">AI review badges · one-time</font>>,
         fillcolor="#F3F4F6", color="#9CA3AF"];
 
@@ -87,13 +89,14 @@ digraph SKILL_FACTORY {
   orch -> wt [label=" dispatch "];
   proj -> queue [style=dashed, color="#10B981", fontcolor="#047857"];
   prio -> queue [style=dashed, color="#10B981", fontcolor="#047857"];
+  driver -> mgr [style=dashed, color="#7C3AED", fontcolor="#6D28D9", label=" next cycle "];
   digest -> queue [style=dashed, color="#10B981", fontcolor="#047857"];
   btns -> open [style=dashed, color="#9CA3AF", fontcolor="#6B7280", label=" badges on the PR "];
   done -> promise [style=invis];
 
   // ---------------- ranks ----------------
   { rank=same; queue; proj; prio; digest; btns; }
-  { rank=same; mgr; }
+  { rank=same; mgr; driver; }
   { rank=same; orch; }
   { rank=same; promise; }
 }

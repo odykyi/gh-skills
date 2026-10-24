@@ -67,7 +67,7 @@ digraph BEFORE_AFTER {
   }
 
   // ================= THE SWITCH =================
-  switch [label=<<b>install 13 skills</b><br/><font point-size="10" color="#6D28D9">npx skills add odykyi/gh-skills</font>>,
+  switch [label=<<b>install 14 skills</b><br/><font point-size="10" color="#6D28D9">npx skills add odykyi/gh-skills</font>>,
           shape=parallelogram, fillcolor="#F5F3FF", color="#7C3AED", penwidth=2];
 
   b_verdict -> switch [style=dashed, color="#7C3AED", fontcolor="#6D28D9", label=" switch on ", constraint=false];

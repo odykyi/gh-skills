@@ -19,6 +19,7 @@ A task is done when the issue is linked **and** the PR is merged. Opening a PR i
 ## Skills
 
 - [pr-workflow-orchestrator](https://raw.githubusercontent.com/odykyi/gh-skills/main/skills/pr-workflow-orchestrator/SKILL.md): the complete PR workflow for a single PR — worktree, open, review, feedback, merge, cleanup
+- [pr-initiative-driver](https://raw.githubusercontent.com/odykyi/gh-skills/main/skills/pr-initiative-driver/SKILL.md): one cycle of a repeating loop that drives sub-sessions to zero open issues, verifying every claim of done
 - [pr-queue-digest](https://raw.githubusercontent.com/odykyi/gh-skills/main/skills/pr-queue-digest/SKILL.md): read-only digest of the open PR queue, bucketed by blocker
 - [pr-manager](https://raw.githubusercontent.com/odykyi/gh-skills/main/skills/pr-manager/SKILL.md): orchestrate 20+ PRs in parallel with Definition of Done enforcement
 - [pr-worktree](https://raw.githubusercontent.com/odykyi/gh-skills/main/skills/pr-worktree/SKILL.md): isolated git worktrees per task, without ever checking out in the main directory

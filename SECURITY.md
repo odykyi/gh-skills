@@ -46,7 +46,7 @@ Every skill that reads outsider-authored content carries the same section:
 The skills that read external content are:
 
 `pr-labeler` · `pr-reviewer` · `pr-feedback-handler` · `pr-commenter` ·
-`pr-manager` · `pr-workflow-orchestrator` · `pr-queue-digest` ·
+`pr-manager` · `pr-workflow-orchestrator` · `pr-queue-digest` · `pr-initiative-driver` ·
 `gh-prioritizer` · `gh-project-orchestrator`
 
 `scripts/validate-skills.mjs` fails the build if that section is missing from

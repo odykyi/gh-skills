@@ -85,7 +85,7 @@
 <g id="node15" class="node">
 <title>switch</title>
 <path fill="#f5f3ff" stroke="#7c3aed" stroke-width="2" d="M756.18,-551.58C756.18,-551.58 526.96,-551.58 526.96,-551.58 520.96,-551.58 511.02,-547.06 507.08,-542.53 507.08,-542.53 457.7,-485.83 457.7,-485.83 453.76,-481.3 455.82,-476.78 461.82,-476.78 461.82,-476.78 691.04,-476.78 691.04,-476.78 697.04,-476.78 706.98,-481.3 710.92,-485.83 710.92,-485.83 760.3,-542.53 760.3,-542.53 764.24,-547.06 762.18,-551.58 756.18,-551.58"/>
-<text xml:space="preserve" text-anchor="start" x="561.38" y="-514.33" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">install 13 skills</text>
+<text xml:space="preserve" text-anchor="start" x="561.38" y="-514.33" font-family="Helvetica,Arial,sans-serif" font-weight="bold" font-size="13.00" fill="#111827">install 14 skills</text>
 <text xml:space="preserve" text-anchor="start" x="543.75" y="-504.18" font-family="Helvetica,Arial,sans-serif" font-size="10.00" fill="#6d28d9">npx skills add odykyi/gh&#45;skills</text>
 </g>
 <!-- b_verdict&#45;&gt;switch -->
