@@ -22,7 +22,8 @@ claim that its work is finished is a claim to verify, not a fact.
 
 ## When to use
 
-- A coordinating thread owns sub-sessions and has to keep them moving.
+- A coordinating thread owns sub-sessions and has to keep them moving. If it
+  owns none yet, step 1b starts them.
 - The user wants decisions made without waiting for them.
 - The cycle is scheduled to repeat, for example every ten minutes.
 
@@ -50,6 +51,27 @@ gh issue list --state open --limit 200 --json number,title,labels,url
 
 If the result has 200 entries, say the inventory is truncated and page further
 before deciding anything.
+
+### Step 1b: Start a sub-session for every item that has none
+
+Do not do the work of each PR or issue in the coordinating thread. If an open
+PR or issue has no sub-session, start one now, in the same cycle. This is the
+step that makes the loop a loop: with no sub-sessions there is nothing to drive.
+
+- Claude Code desktop: call `start_session` with `initiation` `user_asked`,
+  once per independent item, with a self-contained brief. Name the repository
+  and the PR or issue number, the files in scope, the branch to push to, and
+  what "done" means (merged, CI green, issue closed). Items that touch the same
+  files go one after the other, not in parallel.
+- Claude Code CLI or any harness without sessions: call the `Agent` tool once
+  per item, all in one message so they run in parallel. Use a worktree
+  (`isolation: "worktree"`) when the item changes code.
+- Say in the cycle report which sub-sessions you started. If you started none
+  because every item already has one, say that instead.
+
+A brief for a PR that belongs to another contributor's fork tells the
+sub-session to push only to a branch the user has allowed, and to report back
+rather than force anything.
 
 ### Step 2: Find what blocks each sub-session
 
