@@ -29,7 +29,7 @@ export function loadResults(dir = RESULTS_DIR) {
 
 const pct = ({ agree, n }) => (n === 0 ? "—" : `${agree}/${n} (${Math.round((agree / n) * 100)}%)`);
 const num = (x) => (x === null || x === undefined ? "—" : x.toFixed(2));
-const cell = (text) => String(text).replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
+const cell = (text) => String(text).replace(/\\/g, "\\\\").replace(/\|/g, "\\|").replace(/\s*\n\s*/g, " ");
 const code = (value) => (value === null ? "`null`" : `\`${value}\``);
 
 function table(header, rows) {
