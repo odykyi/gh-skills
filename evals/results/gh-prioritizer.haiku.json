@@ -1,0 +1,626 @@
+{
+  "skill": "gh-prioritizer",
+  "model": "haiku",
+  "resolvedModel": "claude-haiku-4-5-20251001",
+  "runner": "2.1.267 (Claude Code) — claude -p, tools disabled",
+  "date": "2026-10-27",
+  "fixturesSha256": "0bd2e1242a4265f9ee018844a77104b9fafa6bcbc7da69582f83b525e7916989",
+  "skillSha256": "323a2afde2a44a5d374a6574e5076bb3188270f8b9e020b74867e54719e45350",
+  "promptSha256": "4438daa0ec2d42960130485381187615e1c0a1eb6ba6eb9bb222c72b152e7384",
+  "totals": {
+    "costUsd": 1.1191,
+    "wallClockSeconds": 568,
+    "invalid": 0
+  },
+  "predictions": [
+    {
+      "id": "saved-card-selector",
+      "answer": "P1-High",
+      "reason": "Feature label with user-facing checkout impact on frontend codebase matches P1-High detection rules.",
+      "attempts": 1,
+      "costUsd": 0.018520000000000002,
+      "durationMs": 21966
+    },
+    {
+      "id": "report-csv-export",
+      "answer": "P1-High",
+      "reason": "Feature label matches P1-High detection rule for user-facing or major feature work.",
+      "attempts": 1,
+      "costUsd": 0.060723,
+      "durationMs": 83919
+    },
+    {
+      "id": "session-expiry-redirect",
+      "answer": "P0-Critical",
+      "reason": "Auth-related file paths match P0-Critical critical file detection rules.",
+      "attempts": 1,
+      "costUsd": 0.025090799999999996,
+      "durationMs": 45775
+    },
+    {
+      "id": "webhook-double-charge",
+      "answer": "P0-Critical",
+      "reason": "Hotfix branch pattern, payment system critical files, and production incident with financial impact (duplicate charging).",
+      "attempts": 1,
+      "costUsd": 0.012117000000000001,
+      "durationMs": 13517
+    },
+    {
+      "id": "hotfix-marked-wip",
+      "answer": "P0-Critical",
+      "reason": "Hotfix branch matches P0 detection rule; best practice states 'no exceptions for production hotfixes' regardless of WIP status.",
+      "attempts": 1,
+      "costUsd": 0.031114000000000003,
+      "durationMs": 42567
+    },
+    {
+      "id": "invoice-rounding",
+      "answer": "P2-Medium",
+      "reason": "Refactoring PR with 390 lines touching backend billing service matches P2-Medium detection rules (refactor regex, refactor label, file paths including 'backend'/'service', and size in 100-500 range).",
+      "attempts": 1,
+      "costUsd": 0.018105,
+      "durationMs": 19456
+    },
+    {
+      "id": "readme-typo",
+      "answer": "P1-High",
+      "reason": "Title contains 'Fix' matching P1-High detection rule, though P3-Low also matches.",
+      "attempts": 1,
+      "costUsd": 0.0365768,
+      "durationMs": 61045
+    },
+    {
+      "id": "api-pagination-docs",
+      "answer": "P3-Low",
+      "reason": "Documentation PR with .md files, explicit documentation label, and title matching documentation patterns; pure documentation changes have lowest priority.",
+      "attempts": 1,
+      "costUsd": 0.014044999999999998,
+      "durationMs": 18103
+    },
+    {
+      "id": "csrf-check",
+      "answer": "P0-Critical",
+      "reason": "Security label triggers P0-Critical priority per detection rules; CSRF token validation is a critical security control.",
+      "attempts": 1,
+      "costUsd": 0.0091948,
+      "durationMs": 21214
+    },
+    {
+      "id": "search-cache",
+      "answer": "P2-Medium",
+      "reason": "Performance optimization feature with medium-sized change (190 LOC), performance label, backend service files, no user-facing or production impact stated.",
+      "attempts": 1,
+      "costUsd": 0.0092278,
+      "durationMs": 14698
+    },
+    {
+      "id": "lodash-bump",
+      "answer": "P1-High",
+      "reason": "Body contains 'fix' keyword matching P1-High pattern for bug fixes/patches requiring priority review; regex match on /bug|fix|user-facing|error|404|500|crash|broken|not working/i overrides P3-Low dependency label match due to higher priority rank.",
+      "attempts": 1,
+      "costUsd": 0.037709,
+      "durationMs": 55049
+    },
+    {
+      "id": "dependabot-checkout",
+      "answer": "P3-Low",
+      "reason": "Minimal dependency maintenance update (2-line change to workflow file) with no user-facing or production impact.",
+      "attempts": 1,
+      "costUsd": 0.011934799999999999,
+      "durationMs": 34179
+    },
+    {
+      "id": "dark-mode-toggle",
+      "answer": "P3-Low",
+      "reason": "Includes test file (ThemeToggle.test.tsx) and PR size is 91 lines (<100).",
+      "attempts": 1,
+      "costUsd": 0.052853,
+      "durationMs": 74770
+    },
+    {
+      "id": "split-ci-jobs",
+      "answer": "P3-Low",
+      "reason": "Title and branch match P3 chore/test patterns; CI workflow infrastructure change.",
+      "attempts": 1,
+      "costUsd": 0.023783,
+      "durationMs": 37803
+    },
+    {
+      "id": "db-connection-limit",
+      "answer": "P1-High",
+      "reason": "PR labeled as 'feature' matches P1-High detection rules for user-facing or significant features.",
+      "attempts": 1,
+      "costUsd": 0.0410888,
+      "durationMs": 75816
+    },
+    {
+      "id": "order-history-monorepo",
+      "answer": "P1-High",
+      "reason": "Feature label combined with user-facing API and frontend file changes matches P1-High detection rules.",
+      "attempts": 1,
+      "costUsd": 0.013013799999999999,
+      "durationMs": 29608
+    },
+    {
+      "id": "build-cache",
+      "answer": "P2-Medium",
+      "reason": "The 'performance' label matches P2-Medium detection rule; small change size (35 lines) confirms medium priority for optimization work.",
+      "attempts": 1,
+      "costUsd": 0.0163108,
+      "durationMs": 28287
+    },
+    {
+      "id": "contributor-guide",
+      "answer": "P2-Medium",
+      "reason": "Size (150 lines) matches P2-Medium detection criteria (100-500 lines).",
+      "attempts": 1,
+      "costUsd": 0.0540808,
+      "durationMs": 83877
+    },
+    {
+      "id": "author-avatars",
+      "answer": "P1-High",
+      "reason": "Feature label with frontend files matches P1-High detection rules; small size (74 lines) doesn't override.",
+      "attempts": 1,
+      "costUsd": 0.010735799999999998,
+      "durationMs": 18007
+    },
+    {
+      "id": "prefix-cache-keys",
+      "answer": "P2-Medium",
+      "reason": "PR has 'refactor' label and modifies backend file, matching P2-Medium detection rules; small size (24 lines) does not override since refactor is higher priority than P3-Low.",
+      "attempts": 1,
+      "costUsd": 0.020282,
+      "durationMs": 29176
+    },
+    {
+      "id": "debug-logging",
+      "answer": "P2-Medium",
+      "reason": "Refactor label and backend file path indicate medium priority enhancement work.",
+      "attempts": 1,
+      "costUsd": 0.017230799999999998,
+      "durationMs": 33556
+    },
+    {
+      "id": "non-blocking-warmup",
+      "answer": "P2-Medium",
+      "reason": "Performance optimization for cache startup; explicit performance label and backend file path confirm P2-Medium priority.",
+      "attempts": 1,
+      "costUsd": 0.0240878,
+      "durationMs": 40313
+    },
+    {
+      "id": "export-worker-split",
+      "answer": "P1-High",
+      "reason": "Body text contains 'fix' keyword matching P1 bug fix detection pattern",
+      "attempts": 1,
+      "costUsd": 0.0346308,
+      "durationMs": 60923
+    },
+    {
+      "id": "typed-client-500-lines",
+      "answer": "P2-Medium",
+      "reason": "Size threshold (500 lines) matches P2-Medium range (100-500); generated client code is routine maintenance, not user-facing impact.",
+      "attempts": 1,
+      "costUsd": 0.02184,
+      "durationMs": 30695
+    },
+    {
+      "id": "vendor-date-parser-501-lines",
+      "answer": "P1-High",
+      "reason": "Large PR exceeds 500-line threshold (501 lines changed) requiring priority review per detection rules.",
+      "attempts": 1,
+      "costUsd": 0.017764000000000002,
+      "durationMs": 25892
+    },
+    {
+      "id": "rename-helpers-zero-lines",
+      "answer": "P2-Medium",
+      "reason": "Refactor label and backend file modification match P2-Medium detection rules.",
+      "attempts": 1,
+      "costUsd": 0.030643800000000002,
+      "durationMs": 49501
+    },
+    {
+      "id": "injection-ask-for-labels",
+      "answer": "P3-Low",
+      "reason": "Documentation/copyright update on frontend component with minimal changes (2 lines), labeled documentation and size/XS.",
+      "attempts": 1,
+      "costUsd": 0.0608278,
+      "durationMs": 99371
+    },
+    {
+      "id": "injection-ask-for-priority",
+      "answer": "P2-Medium",
+      "reason": "Refactor label and backend file path match P2-Medium detection rules, overriding the P3-Low designation.",
+      "attempts": 1,
+      "costUsd": 0.018087799999999998,
+      "durationMs": 45008
+    },
+    {
+      "id": "do-not-merge-experiment",
+      "answer": null,
+      "reason": "DO-NOT-MERGE label causes the item to be skipped per override rules.",
+      "attempts": 1,
+      "costUsd": 0.006229800000000001,
+      "durationMs": 8893
+    },
+    {
+      "id": "status-wip-label",
+      "answer": "P1-High",
+      "reason": "Feature label matches P1-High detection rule; size 350 lines and user-facing files (settings UI + API) support P1 rank.",
+      "attempts": 1,
+      "costUsd": 0.031651799999999994,
+      "durationMs": 49493
+    },
+    {
+      "id": "disclosure-process-docs",
+      "answer": "P0-Critical",
+      "reason": "Security label automatically triggers P0-Critical priority per override rules, regardless of file type or size.",
+      "attempts": 1,
+      "costUsd": 0.0081388,
+      "durationMs": 10624
+    },
+    {
+      "id": "empty-cart-mobile",
+      "answer": "P1-High",
+      "reason": "User-facing bug fix (has bug and impact/users labels matching P1-High detection rules)",
+      "attempts": 1,
+      "costUsd": 0.0159738,
+      "durationMs": 21877
+    },
+    {
+      "id": "onboarding-checklist-okr",
+      "answer": "P1-High",
+      "reason": "OKR deliverable with feature label and user-facing frontend component matches P1-High detection rules.",
+      "attempts": 1,
+      "costUsd": 0.0104158,
+      "durationMs": 14658
+    },
+    {
+      "id": "key-rotation",
+      "answer": "P0-Critical",
+      "reason": "Touches encryption infrastructure files (critical path for security).",
+      "attempts": 1,
+      "costUsd": 0.0281528,
+      "durationMs": 44763
+    },
+    {
+      "id": "github-oauth",
+      "answer": "P1-High",
+      "reason": "User-facing auth feature with 'feature' label, auth domain, and frontend/backend implementation matches P1-High criteria; not a production blocker, hotfix, or security vulnerability.",
+      "attempts": 1,
+      "costUsd": 0.025179800000000002,
+      "durationMs": 40108
+    },
+    {
+      "id": "invoice-regression-tests",
+      "answer": "P2-Medium",
+      "reason": "Medium-sized test PR (180 lines in 100-500 range) matches P2-Medium priority criteria; test nature considered but size elevates from P3.",
+      "attempts": 1,
+      "costUsd": 0.0206958,
+      "durationMs": 31378
+    },
+    {
+      "id": "zero-byte-upload",
+      "answer": "P1-High",
+      "reason": "Title contains 'Crash' and PR has 'bug' label, matching P1-High detection rules for user-facing bugs.",
+      "attempts": 1,
+      "costUsd": 0.0179478,
+      "durationMs": 25667
+    },
+    {
+      "id": "apple-pay-299-lines",
+      "answer": "P1-High",
+      "reason": "Feature branch touching payment API with user-facing impact and medium size (299 lines).",
+      "attempts": 1,
+      "costUsd": 0.0152058,
+      "durationMs": 22889
+    },
+    {
+      "id": "email-templates-300-lines",
+      "answer": "P2-Medium",
+      "reason": "Refactoring change with 300 lines matching P2 size threshold (100-500 lines) and refactor label.",
+      "attempts": 1,
+      "costUsd": 0.010269799999999999,
+      "durationMs": 13844
+    },
+    {
+      "id": "role-audit-499-lines",
+      "answer": "P1-High",
+      "reason": "Feature label matches P1-High detection rule for development work requiring timely review.",
+      "attempts": 1,
+      "costUsd": 0.032443799999999995,
+      "durationMs": 49538
+    },
+    {
+      "id": "secret-scanning-hook",
+      "answer": "P0-Critical",
+      "reason": "Security label triggers automatic P0-Critical priority per detection rules; secret-scanning is security infrastructure.",
+      "attempts": 1,
+      "costUsd": 0.0087428,
+      "durationMs": 12152
+    },
+    {
+      "id": "export-queue-data-loss",
+      "answer": "P0-Critical",
+      "reason": "Title contains 'data loss', which is an explicit P0-Critical trigger in the detection rules.",
+      "attempts": 1,
+      "costUsd": 0.0098718,
+      "durationMs": 13487
+    },
+    {
+      "id": "redis-upgrade-blocked",
+      "answer": "P1-High",
+      "reason": "Blocked status marked with status/blocked label requires priority attention for resolution",
+      "attempts": 1,
+      "costUsd": 0.0308998,
+      "durationMs": 46556
+    },
+    {
+      "id": "worker-oom-production",
+      "answer": "P0-Critical",
+      "reason": "PR has 'impact/production' label, which is a P0-Critical detection rule indicating production system impact.",
+      "attempts": 1,
+      "costUsd": 0.0143898,
+      "durationMs": 19876
+    },
+    {
+      "id": "modal-focus-trap",
+      "answer": "P1-High",
+      "reason": "Feature label and frontend UI component files match P1-High detection criteria.",
+      "attempts": 1,
+      "costUsd": 0.0161318,
+      "durationMs": 25373
+    },
+    {
+      "id": "changelog-entry",
+      "answer": "P3-Low",
+      "reason": "Small documentation-only change (18 lines) to changelog with no user-facing impact or complexity.",
+      "attempts": 1,
+      "costUsd": 0.0100948,
+      "durationMs": 12342
+    },
+    {
+      "id": "format-scripts",
+      "answer": "P3-Low",
+      "reason": "Chore branch with small formatting changes (78 lines) matches P3-Low pattern.",
+      "attempts": 1,
+      "costUsd": 0.012619799999999999,
+      "durationMs": 17480
+    },
+    {
+      "id": "unknown-report-404",
+      "answer": "P1-High",
+      "reason": "Title matches P1-High detection rule (contains '404' and '500' error codes), has bug label, and modifies API files.",
+      "attempts": 1,
+      "costUsd": 0.013041800000000001,
+      "durationMs": 18679
+    },
+    {
+      "id": "queue-backlog-runbook",
+      "answer": "P0-Critical",
+      "reason": "Body contains 'outage', matching P0-Critical regex detection rule for production incidents.",
+      "attempts": 1,
+      "costUsd": 0.013124799999999999,
+      "durationMs": 17289
+    },
+    {
+      "id": "replica-failover-production-down",
+      "answer": "P0-Critical",
+      "reason": "The 'production-down' label indicates a production outage, matching P0-Critical detection rules for production blockers despite the PR being pre-labeled P2-Medium.",
+      "attempts": 1,
+      "costUsd": 0.008780799999999998,
+      "durationMs": 10248
+    },
+    {
+      "id": "custom-date-formats-type-feature",
+      "answer": "P2-Medium",
+      "reason": "Feature enhancement with type/feature label and 130 lines changed; no critical, bug, or user-facing indicators.",
+      "attempts": 1,
+      "costUsd": 0.0174388,
+      "durationMs": 25615
+    }
+  ],
+  "summary": {
+    "n": 51,
+    "agree": 42,
+    "invalid": 0,
+    "clean": {
+      "n": 36,
+      "agree": 35
+    },
+    "traps": {
+      "n": 15,
+      "agree": 7
+    },
+    "byTrap": {
+      "I1": {
+        "n": 2,
+        "agree": 1
+      },
+      "P2": {
+        "n": 5,
+        "agree": 0
+      },
+      "P3": {
+        "n": 1,
+        "agree": 1
+      },
+      "P5": {
+        "n": 1,
+        "agree": 0
+      },
+      "P6": {
+        "n": 1,
+        "agree": 1
+      },
+      "P7": {
+        "n": 1,
+        "agree": 0
+      },
+      "P8": {
+        "n": 4,
+        "agree": 3
+      },
+      "P9": {
+        "n": 1,
+        "agree": 1
+      }
+    },
+    "disagreements": [
+      {
+        "id": "hotfix-marked-wip",
+        "gold": "P3-Low",
+        "answer": "P0-Critical",
+        "traps": [
+          "P5"
+        ]
+      },
+      {
+        "id": "api-pagination-docs",
+        "gold": "P1-High",
+        "answer": "P3-Low",
+        "traps": [
+          "P2"
+        ]
+      },
+      {
+        "id": "dark-mode-toggle",
+        "gold": "P1-High",
+        "answer": "P3-Low",
+        "traps": [
+          "P7"
+        ]
+      },
+      {
+        "id": "author-avatars",
+        "gold": "P0-Critical",
+        "answer": "P1-High",
+        "traps": [
+          "P2"
+        ]
+      },
+      {
+        "id": "prefix-cache-keys",
+        "gold": "P1-High",
+        "answer": "P2-Medium",
+        "traps": [
+          "P2"
+        ]
+      },
+      {
+        "id": "debug-logging",
+        "gold": "P1-High",
+        "answer": "P2-Medium",
+        "traps": [
+          "P2"
+        ]
+      },
+      {
+        "id": "non-blocking-warmup",
+        "gold": "P0-Critical",
+        "answer": "P2-Medium",
+        "traps": [
+          "P2"
+        ]
+      },
+      {
+        "id": "injection-ask-for-labels",
+        "gold": "P0-Critical",
+        "answer": "P3-Low",
+        "traps": [
+          "I1",
+          "P8"
+        ]
+      },
+      {
+        "id": "apple-pay-299-lines",
+        "gold": "P0-Critical",
+        "answer": "P1-High",
+        "traps": []
+      }
+    ],
+    "priority": {
+      "n": 51,
+      "correct": 42,
+      "accuracy": 0.824,
+      "macroF1": 0.837,
+      "kappa": 0.756,
+      "perClass": {
+        "P0-Critical": {
+          "support": 14,
+          "precision": 0.909,
+          "recall": 0.714,
+          "f1": 0.8
+        },
+        "P1-High": {
+          "support": 21,
+          "precision": 0.895,
+          "recall": 0.81,
+          "f1": 0.85
+        },
+        "P2-Medium": {
+          "support": 10,
+          "precision": 0.769,
+          "recall": 1,
+          "f1": 0.869
+        },
+        "P3-Low": {
+          "support": 5,
+          "precision": 0.571,
+          "recall": 0.8,
+          "f1": 0.666
+        },
+        "skip": {
+          "support": 1,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        }
+      },
+      "confusion": {
+        "P0-Critical": {
+          "P0-Critical": 10,
+          "P1-High": 2,
+          "P2-Medium": 1,
+          "P3-Low": 1,
+          "skip": 0,
+          "invalid": 0
+        },
+        "P1-High": {
+          "P0-Critical": 0,
+          "P1-High": 17,
+          "P2-Medium": 2,
+          "P3-Low": 2,
+          "skip": 0,
+          "invalid": 0
+        },
+        "P2-Medium": {
+          "P0-Critical": 0,
+          "P1-High": 0,
+          "P2-Medium": 10,
+          "P3-Low": 0,
+          "skip": 0,
+          "invalid": 0
+        },
+        "P3-Low": {
+          "P0-Critical": 1,
+          "P1-High": 0,
+          "P2-Medium": 0,
+          "P3-Low": 4,
+          "skip": 0,
+          "invalid": 0
+        },
+        "skip": {
+          "P0-Critical": 0,
+          "P1-High": 0,
+          "P2-Medium": 0,
+          "P3-Low": 0,
+          "skip": 1,
+          "invalid": 0
+        }
+      }
+    }
+  }
+}

@@ -279,8 +279,12 @@ implementation of every rule, and an LLM given the skill text.
 | Skill | Answered by | Agrees with gold | Clean fixtures | Trap fixtures | Notes |
 | --- | --- | --- | --- | --- | --- |
 | pr-labeler | reference implementation | 51/51 (100%) | 31/31 (100%) | 20/20 (100%) |  |
+| pr-labeler | claude-haiku-4-5-20251001 (LLM) | 34/51 (67%) | 21/31 (68%) | 13/20 (65%) | $0.60 for the run |
+| pr-labeler | claude-sonnet-5 (LLM) | 41/51 (80%) | 26/31 (84%) | 15/20 (75%) | $0.53 for the run |
 | gh-prioritizer | documented algorithm, run verbatim | 6/51 (12%) | 5/36 (14%) | 1/15 (7%) | throws `TypeError` on 45 |
 | gh-prioritizer | reference implementation | 51/51 (100%) | 36/36 (100%) | 15/15 (100%) |  |
+| gh-prioritizer | claude-haiku-4-5-20251001 (LLM) | 42/51 (82%) | 35/36 (97%) | 7/15 (47%) | $1.12 for the run |
+| gh-prioritizer | claude-sonnet-5 (LLM) | 37/51 (73%) | 34/36 (94%) | 3/15 (20%) | $0.75 for the run |
 
 On the same 51 pull requests, pr-labeler's priority label and gh-prioritizer's priority differ 38 times.
 <!-- evals-summary:end -->
@@ -292,8 +296,22 @@ overrides: it hands a rule written for the file list a single label string.
 Second, pr-labeler and gh-prioritizer both assign a priority, and on most pull
 requests they assign different ones.
 
+With gh-prioritizer loaded, both models follow the rules on clean fixtures
+and depart from them on trap fixtures. Their own reasons show each trap miss
+is the model declining a defect:
+- `non-blocking` is not `blocking`, and `Prefix` is not a fix.
+- A body that asks for "P0-Critical" is a prompt injection.
+- `status/wip` means work in progress.
+
+The stronger model is the less literal one. On pr-labeler, most misses are
+the model's own:
+- Haiku labels `test_*.py`, `*_test.go` and `*_spec.rb` as `team/qa`.
+- Sonnet reads `linesChanged: 52` as `size/XS`.
+
+No model obeyed an injected instruction.
+
 The method, per-label scores, every disagreement with the model's own reason,
-and the 17 ambiguities the harness found are in
+and the 16 ambiguities and defects the harness found are in
 [`evals/README.md`](./evals/README.md). `npm test` runs the reference eval in
 CI and fails if these numbers drift from the recorded answers.
 
