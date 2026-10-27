@@ -4,17 +4,26 @@
  * the order the skill lists it; where the skill leaves a choice open, the
  * comment names the ambiguity id documented in evals/README.md.
  *
- * Input:  { branch, files: string[], additions, deletions }
+ * Priority labels are not decided here: the skill defers to gh-prioritizer's
+ * rules (ambiguity X1), so labelPullRequest runs prioritize() on the title,
+ * the branch, the PR's labels plus the type labels assigned in this pass, the
+ * files and the size.
+ *
+ * Input:  { title, branch, labels: string[], files: string[], additions, deletions }
  * Output: { type, priority, size, team, domain, labels, evidence }
  */
 
 import { firstMatch } from "./glob.mjs";
+import { pathWords, prioritize } from "./gh-prioritizer.mjs";
 
 // Type Labels (from branch name). A branch pattern `feature/*` is read as
 // "starts with feature/" — a git ref is not a file path, so `*` also spans
-// later slashes (feature/auth/login is still a feature branch).
+// later slashes (feature/auth/login is still a feature branch). Prefixes are
+// matched in lower case. `feat/`, `test/`, `chore/` and `dependabot/` map to a
+// type label too (ambiguity L4).
 export const TYPE_RULES = [
   { prefix: "feature/", labels: ["feature"] },
+  { prefix: "feat/", labels: ["feature"] },
   { prefix: "fix/", labels: ["bug"] },
   { prefix: "bugfix/", labels: ["bug"] },
   { prefix: "hotfix/", labels: ["hotfix"] }, // + P0-Critical, applied as the priority
@@ -23,6 +32,9 @@ export const TYPE_RULES = [
   { prefix: "security/", labels: ["security", "security-review"] },
   { prefix: "performance/", labels: ["performance"] },
   { prefix: "deps/", labels: ["dependencies"] },
+  { prefix: "dependabot/", labels: ["dependencies"] },
+  { prefix: "test/", labels: ["testing"] },
+  { prefix: "chore/", labels: ["chore"] },
 ];
 
 // Size Labels (auto-calculated from diff): lines changed = additions + deletions.
@@ -45,27 +57,15 @@ export const TEAM_RULES = [
   { label: "team/security", patterns: ["security/**", "**/auth/**"] },
 ];
 
-// Domain Labels (from branch/files). The globs are applied as written, so
-// `*ui*` matches `build` and `guide` (ambiguity L3).
+// Domain Labels (from branch/files). A label applies when the branch or a
+// changed path contains one of its words, as a whole word in any case; paths
+// are split at / . _ and - (ambiguity L3).
 export const DOMAIN_RULES = [
-  { label: "domain/api", pattern: "*api*" },
-  { label: "domain/auth", pattern: "*auth*" },
-  { label: "domain/payment", pattern: "*payment*" },
-  { label: "domain/ui", pattern: "*ui*" },
-  { label: "domain/docs", pattern: "*docs*" },
-];
-
-// The skill splits feature/* into "customer-facing" (P1-High) and "internal"
-// (P2-Medium) without defining either. The only definition in the collection
-// is USER_FACING_PATHS in gh-prioritizer/references/priority-detection-rules.md,
-// so that list decides (ambiguity L1).
-export const CUSTOMER_FACING_PATHS = [
-  "**/api/**",
-  "**/auth/**",
-  "**/payment/**",
-  "**/frontend/**",
-  "**/*.tsx",
-  "**/*.jsx",
+  { label: "domain/api", words: ["api"] },
+  { label: "domain/auth", words: ["auth", "authentication", "authorization", "oauth"] },
+  { label: "domain/payment", words: ["payment", "payments"] },
+  { label: "domain/ui", words: ["ui"] },
+  { label: "domain/docs", words: ["docs"] },
 ];
 
 export function linesChanged(pr) {
@@ -76,26 +76,6 @@ export function sizeLabel(lines) {
   return SIZE_BUCKETS.find((bucket) => lines <= bucket.max).label;
 }
 
-function priorityLabel(branch, files, evidence) {
-  if (branch.startsWith("hotfix/")) {
-    evidence["priority"] = "branch hotfix/*";
-    return "P0-Critical";
-  }
-  if (branch.startsWith("feature/")) {
-    const hit = firstMatch(files, CUSTOMER_FACING_PATHS);
-    evidence["priority"] = hit
-      ? `customer-facing feature: ${hit.path} matches ${hit.pattern}`
-      : "internal feature: no customer-facing path";
-    return hit ? "P1-High" : "P2-Medium";
-  }
-  if (branch.startsWith("docs/") || branch.startsWith("refactor/")) {
-    evidence["priority"] = "branch docs/* or refactor/*";
-    return "P3-Low";
-  }
-  evidence["priority"] = "no priority rule matched: default";
-  return "P2-Medium";
-}
-
 export function labelPullRequest(pr) {
   const branch = pr.branch ?? "";
   const files = pr.files ?? [];
@@ -103,15 +83,13 @@ export function labelPullRequest(pr) {
 
   const type = [];
   for (const rule of TYPE_RULES) {
-    if (branch.startsWith(rule.prefix)) {
+    if (branch.toLowerCase().startsWith(rule.prefix)) {
       for (const label of rule.labels) {
         type.push(label);
         evidence[label] = `branch ${rule.prefix}*`;
       }
     }
   }
-
-  const priority = priorityLabel(branch, files, evidence);
 
   const lines = linesChanged(pr);
   const size = sizeLabel(lines);
@@ -128,14 +106,29 @@ export function labelPullRequest(pr) {
 
   const domain = [];
   for (const rule of DOMAIN_RULES) {
-    const hit = firstMatch([branch, ...files], [rule.pattern]);
-    if (hit) {
-      domain.push(rule.label);
-      evidence[rule.label] = `${hit.path} matches ${hit.pattern}`;
+    for (const path of [branch, ...files]) {
+      const word = pathWords(path).find((w) => rule.words.includes(w));
+      if (word) {
+        domain.push(rule.label);
+        evidence[rule.label] = `${path} has the word "${word}"`;
+        break;
+      }
     }
   }
 
-  const labels = [...type, priority, size, ...team, ...domain].sort();
+  // Priority comes last: gh-prioritizer sees the labels assigned above (X1).
+  const decision = prioritize({
+    title: pr.title,
+    branch,
+    labels: [...(pr.labels ?? []), ...type],
+    files,
+    additions: pr.additions,
+    deletions: pr.deletions,
+  });
+  const priority = decision.priority; // null: DO-NOT-MERGE, no priority label
+  if (priority) evidence["priority"] = `gh-prioritizer ${decision.decidedBy}`;
+
+  const labels = [...type, ...(priority ? [priority] : []), size, ...team, ...domain].sort();
   return { type, priority, size, team, domain, labels, evidence };
 }
 

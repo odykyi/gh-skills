@@ -12,11 +12,13 @@ import { join } from "node:path";
 import { PRIORITIES } from "./gh-prioritizer.mjs";
 import { ROOT, sha256, skillInput } from "./fixtures.mjs";
 
-// What an agent would have loaded. gh-prioritizer's SKILL.md defers to the
-// reference file for the "complete algorithm", so that file is loaded too.
+// What an agent would have loaded, as paths under skills/. gh-prioritizer's
+// SKILL.md defers to the reference file for the "complete algorithm", so that
+// file is loaded too; pr-labeler defers its priority label to the same rules.
+const PRIORITY_RULES = "gh-prioritizer/references/priority-detection-rules.md";
 export const SKILL_CONTEXT = {
-  "pr-labeler": ["SKILL.md"],
-  "gh-prioritizer": ["SKILL.md", "references/priority-detection-rules.md"],
+  "pr-labeler": ["pr-labeler/SKILL.md", PRIORITY_RULES],
+  "gh-prioritizer": ["gh-prioritizer/SKILL.md", PRIORITY_RULES],
 };
 
 const TASK = {
@@ -32,8 +34,8 @@ const TASK = {
 
 export function systemPrompt(skill) {
   const files = SKILL_CONTEXT[skill].map((rel) => {
-    const text = readFileSync(join(ROOT, "skills", skill, rel), "utf8");
-    return `<file path="skills/${skill}/${rel}">\n${text}\n</file>`;
+    const text = readFileSync(join(ROOT, "skills", rel), "utf8");
+    return `<file path="skills/${rel}">\n${text}\n</file>`;
   });
   return [
     `You are an AI coding agent with the ${skill} skill loaded. Apply the skill to the pull request in the user message exactly as the skill describes.`,

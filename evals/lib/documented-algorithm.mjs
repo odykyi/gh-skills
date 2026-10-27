@@ -2,7 +2,7 @@
  * Runs the priority algorithm exactly as it is printed in
  * skills/gh-prioritizer/references/priority-detection-rules.md.
  *
- * The two `javascript` blocks under "Detection Logic" and "Standard Overrides"
+ * The `javascript` blocks under "Detection Logic" and "Standard Overrides"
  * are extracted from the markdown and evaluated in a fresh V8 context, so the
  * eval measures the text an agent actually reads, not a paraphrase of it.
  */
@@ -24,7 +24,7 @@ export function extractAlgorithm(markdown = readFileSync(DOC_PATH, "utf8")) {
   return `${rules}\n${overrides}\n;determinePriority`;
 }
 
-/** Returns determinePriority(title, body, labels, files, size, branch) from the doc. */
+/** Returns determinePriority({ title, labels, files, size, branch }) from the doc. */
 export function loadDocumentedAlgorithm(markdown) {
   const context = vm.createContext({});
   return vm.runInContext(extractAlgorithm(markdown), context, { filename: "priority-detection-rules.md" });
@@ -34,7 +34,13 @@ export function loadDocumentedAlgorithm(markdown) {
 export function runDocumented(determinePriority, pr) {
   const size = (pr.additions ?? 0) + (pr.deletions ?? 0);
   try {
-    const priority = determinePriority(pr.title ?? "", pr.body ?? "", pr.labels ?? [], pr.files ?? [], size, pr.branch ?? "");
+    const priority = determinePriority({
+      title: pr.title ?? "",
+      labels: pr.labels ?? [],
+      files: pr.files ?? [],
+      size,
+      branch: pr.branch ?? "",
+    });
     return { priority };
   } catch (error) {
     return { error: `${error.name}: ${error.message}` };

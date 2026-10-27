@@ -1,5 +1,5 @@
 {
-  "description": "Fixtures tagged with a trap of the skill before the decision-rule fixes (PR #7 fixtures, sha256 of evals/baseline/*.json fixturesSha256).",
+  "description": "State of the evals at PR #7, before the decision-rule fixes: the fixtures' trap tags per skill, the gold answers, and the numbers the README then reported for the reference rows. The four *.json results next to this file are the LLM runs of that date.",
   "traps": {
     "pr-labeler": [
       "report-csv-export",
@@ -510,6 +510,25 @@
         "size/M"
       ],
       "gh-prioritizer": "P2-Medium"
+    }
+  },
+  "reference": {
+    "documentedAlgorithm": {
+      "agree": 6,
+      "n": 51,
+      "clean": {
+        "agree": 5,
+        "n": 36
+      },
+      "traps": {
+        "agree": 1,
+        "n": 15
+      },
+      "threw": 45
+    },
+    "prLabelerPriorityDiffersFromPrioritizer": {
+      "differ": 38,
+      "n": 51
     }
   }
 }

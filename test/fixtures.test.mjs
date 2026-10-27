@@ -4,7 +4,7 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { EVALS_DIR, loadFixtures, skillInput } from "../evals/lib/fixtures.mjs";
 import { DOMAIN_RULES, SIZE_BUCKETS, TEAM_RULES, TYPE_RULES, labelPullRequest } from "../evals/lib/pr-labeler.mjs";
-import { PRIORITIES, RULES, prioritize } from "../evals/lib/gh-prioritizer.mjs";
+import { OVERRIDES, PRIORITIES, RULES, prioritize } from "../evals/lib/gh-prioritizer.mjs";
 
 const { fixtures } = loadFixtures();
 
@@ -38,7 +38,8 @@ test("gold answers use only labels and priorities the skills define", () => {
     const labels = f.gold["pr-labeler"];
     assert.equal(new Set(labels).size, labels.length, `${f.id}: duplicate gold label`);
     for (const label of labels) assert.ok(KNOWN_LABELS.has(label), `${f.id}: unknown label ${label}`);
-    assert.equal(labels.filter((l) => PRIORITIES.includes(l)).length, 1, `${f.id}: needs one priority`);
+    const skipped = f.gold["gh-prioritizer"] === null;
+    assert.equal(labels.filter((l) => PRIORITIES.includes(l)).length, skipped ? 0 : 1, `${f.id}: needs one priority unless skipped`);
     assert.equal(labels.filter((l) => l.startsWith("size/")).length, 1, `${f.id}: needs one size`);
     const priority = f.gold["gh-prioritizer"];
     assert.ok(priority === null || PRIORITIES.includes(priority), `${f.id}: unknown priority ${priority}`);
@@ -66,13 +67,11 @@ test("coverage: every pr-labeler rule produces a gold label somewhere", () => {
 });
 
 test("coverage: every reachable gh-prioritizer rule fires on some fixture", () => {
-  // p0:branch can never fire: the hotfix override returns first (ambiguity P4).
-  const UNREACHABLE = new Set(["p0:branch"]);
   const fired = new Set(fixtures.flatMap((f) => prioritize(skillInput("gh-prioritizer", f)).matches.map((m) => m.rule)));
-  for (const { rule } of RULES) {
-    if (UNREACHABLE.has(rule)) assert.ok(!fired.has(rule), `${rule} fired; it is listed as unreachable`);
-    else assert.ok(fired.has(rule), `no fixture fires ${rule}`);
-  }
+  for (const { rule } of RULES) assert.ok(fired.has(rule), `no fixture fires ${rule}`);
+  const decided = new Set(fixtures.map((f) => prioritize(skillInput("gh-prioritizer", f)).decidedBy));
+  assert.ok(decided.has("default"), "no fixture reaches the P2-Medium default");
+  for (const override of OVERRIDES) assert.ok(decided.has(override.rule), `no fixture is decided by ${override.rule}`);
   for (const priority of [...PRIORITIES, null]) {
     assert.ok(fixtures.some((f) => f.gold["gh-prioritizer"] === priority), `no fixture has gold ${priority}`);
   }
