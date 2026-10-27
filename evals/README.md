@@ -99,6 +99,11 @@ On the same 52 pull requests, pr-labeler's priority label and gh-prioritizer's p
 
 ### Before and after the fixes
 
+A 36-second [video](./media/eval-demo.mp4) replays a real `npm run eval:llm --
+--model haiku --limit 3` run (the lines are its actual output; the waits
+between them are cut) and ends on the before/after numbers below, which come
+from the recorded full runs, not from that 3-fixture run.
+
 <!-- evals-delta:start -->
 | Skill | Model | Formerly-trap fixtures | Formerly-clean fixtures | The 51 PR #7 fixtures | Cost of the run |
 | --- | --- | --- | --- | --- | --- |
