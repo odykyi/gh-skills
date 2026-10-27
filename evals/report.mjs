@@ -11,10 +11,10 @@
 import { readFileSync, writeFileSync } from "node:fs";
 import { loadFixtures } from "./lib/fixtures.mjs";
 import { referenceResults } from "./lib/reference.mjs";
-import { blockStatus, loadResults, renderDetail, renderSummary, replaceBlock } from "./lib/report.mjs";
+import { blockStatus, loadBaseline, loadResults, renderDelta, renderDetail, renderSummary, replaceBlock } from "./lib/report.mjs";
 
 const { fixtures } = loadFixtures();
-const data = { reference: referenceResults(fixtures), results: loadResults() };
+const data = { fixtures, reference: referenceResults(fixtures), results: loadResults(), baseline: loadBaseline() };
 
 if (process.argv.includes("--write")) {
   for (const block of blockStatus(data)) {
@@ -30,6 +30,8 @@ if (process.argv.includes("--write")) {
   process.exit(stale.length ? 1 : 0);
 } else {
   console.log(renderSummary(data));
+  console.log();
+  console.log(renderDelta(data));
   console.log();
   console.log(renderDetail(data));
 }

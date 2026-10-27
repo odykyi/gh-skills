@@ -271,47 +271,50 @@ first section of every one of them, and the build fails if it is removed.
 Two skills decide something from pull request data: pr-labeler picks labels
 and gh-prioritizer picks a priority. Their rules are markdown tables and code
 blocks that an agent applies by reading, so [`evals/`](./evals) tests them
-the way you would test code. It runs 51 hand-labelled pull requests against
+the way you would test code. It runs 52 hand-labelled pull requests against
 three answerers: the documented algorithm executed verbatim, a reference
 implementation of every rule, and an LLM given the skill text.
 
 <!-- evals-summary:start -->
 | Skill | Answered by | Agrees with gold | Clean fixtures | Trap fixtures | Notes |
 | --- | --- | --- | --- | --- | --- |
-| pr-labeler | reference implementation | 51/51 (100%) | 31/31 (100%) | 20/20 (100%) |  |
-| pr-labeler | claude-haiku-4-5-20251001 (LLM) | 34/51 (67%) | 21/31 (68%) | 13/20 (65%) | $0.60 for the run |
-| pr-labeler | claude-sonnet-5 (LLM) | 41/51 (80%) | 26/31 (84%) | 15/20 (75%) | $0.53 for the run |
-| gh-prioritizer | documented algorithm, run verbatim | 6/51 (12%) | 5/36 (14%) | 1/15 (7%) | throws `TypeError` on 45 |
-| gh-prioritizer | reference implementation | 51/51 (100%) | 36/36 (100%) | 15/15 (100%) |  |
-| gh-prioritizer | claude-haiku-4-5-20251001 (LLM) | 42/51 (82%) | 35/36 (97%) | 7/15 (47%) | $1.12 for the run |
-| gh-prioritizer | claude-sonnet-5 (LLM) | 37/51 (73%) | 34/36 (94%) | 3/15 (20%) | $0.75 for the run |
+| pr-labeler | reference implementation | 52/52 (100%) | 45/45 (100%) | 7/7 (100%) |  |
+| pr-labeler | claude-haiku-4-5-20251001 (LLM) | 43/52 (83%) | 37/45 (82%) | 6/7 (86%) | $1.16 for the run |
+| pr-labeler | claude-sonnet-5 (LLM) | 48/52 (92%) | 43/45 (96%) | 5/7 (71%) | $1.04 for the run |
+| gh-prioritizer | documented algorithm, run verbatim | 52/52 (100%) | 49/49 (100%) | 3/3 (100%) |  |
+| gh-prioritizer | reference implementation | 52/52 (100%) | 49/49 (100%) | 3/3 (100%) |  |
+| gh-prioritizer | claude-haiku-4-5-20251001 (LLM) | 52/52 (100%) | 49/49 (100%) | 3/3 (100%) | $0.73 for the run |
+| gh-prioritizer | claude-sonnet-5 (LLM) | 52/52 (100%) | 49/49 (100%) | 3/3 (100%) | $0.62 for the run |
 
-On the same 51 pull requests, pr-labeler's priority label and gh-prioritizer's priority differ 38 times.
+On the same 52 pull requests, pr-labeler's priority label and gh-prioritizer's priority differ 0 times.
 <!-- evals-summary:end -->
 
-Two findings need no model to reproduce. First, the priority algorithm in
-gh-prioritizer's reference file, run exactly as printed, throws `TypeError:
-files.some is not a function` on every pull request that gets past the
-overrides: it hands a rule written for the file list a single label string.
-Second, pr-labeler and gh-prioritizer both assign a priority, and on most pull
-requests they assign different ones.
+The first version of this harness (PR #7) measured the skills as written and
+found sixteen defects. Two needed no model to reproduce: the priority
+algorithm in gh-prioritizer's reference file threw `TypeError: files.some is
+not a function` on every pull request that got past the overrides, and
+pr-labeler and gh-prioritizer assigned different priorities to 38 of 51 pull
+requests. Models agreed with the skill on clean fixtures and departed from it
+on the trap fixtures, each time declining a documented defect.
 
-With gh-prioritizer loaded, both models follow the rules on clean fixtures
-and depart from them on trap fixtures. Their own reasons show each trap miss
-is the model declining a defect:
-- `non-blocking` is not `blocking`, and `Prefix` is not a fix.
-- A body that asks for "P0-Critical" is a prompt injection.
-- `status/wip` means work in progress.
+The defects are now fixed in the skill text (whole-word matching, a
+runnable algorithm, a reachable default, the PR body never read, one set of
+priority rules shared by both skills), and the same harness measures the fix:
 
-The stronger model is the less literal one. On pr-labeler, most misses are
-the model's own:
-- Haiku labels `test_*.py`, `*_test.go` and `*_spec.rb` as `team/qa`.
-- Sonnet reads `linesChanged: 52` as `size/XS`.
+| Trap-tagged fixtures at PR #7 | Before | After |
+| --- | --- | --- |
+| gh-prioritizer, Haiku | 7/15 (47%) | 15/15 (100%) |
+| gh-prioritizer, Sonnet | 3/15 (20%) | 15/15 (100%) |
+| pr-labeler, Haiku | 13/20 (65%) | 18/20 (90%) |
+| pr-labeler, Sonnet | 15/20 (75%) | 18/20 (90%) |
+| Documented algorithm, run verbatim | 1/15 (threw on 45 of 51) | 15/15 |
 
-No model obeyed an injected instruction.
+"After" is scored against gold the fixes changed, so it measures agreement with
+what the skill now says. The remaining misses are the models' own: `team/qa`
+and `size` labels, plus two timeouts.
 
 The method, per-label scores, every disagreement with the model's own reason,
-and the 16 ambiguities and defects the harness found are in
+and the 17 ambiguities and defects the harness found, with what each fix does, are in
 [`evals/README.md`](./evals/README.md). `npm test` runs the reference eval in
 CI and fails if these numbers drift from the recorded answers.
 

@@ -1,10 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { categorize, labelPullRequest, sizeLabel } from "../evals/lib/pr-labeler.mjs";
+import { prioritize } from "../evals/lib/gh-prioritizer.mjs";
 import { loadFixtures, skillInput } from "../evals/lib/fixtures.mjs";
 
 const { fixtures } = loadFixtures();
-const pr = (overrides) => ({ branch: "chore/x", files: [], additions: 0, deletions: 0, ...overrides });
+const pr = (overrides) => ({ title: "", branch: "ops/x", labels: [], files: [], additions: 0, deletions: 0, ...overrides });
 
 for (const fixture of fixtures) {
   test(`gold: ${fixture.id}`, () => {
@@ -36,8 +37,12 @@ test("type labels come from the branch prefix", () => {
     "security/x": ["security", "security-review"],
     "performance/x": ["performance"],
     "deps/x": ["dependencies"],
-    "feat/x": [], // unmapped prefix (L4)
-    "Feature/x": [], // prefixes are case-sensitive
+    "feat/x": ["feature"], // L4
+    "test/x": ["testing"], // L4
+    "chore/x": ["chore"], // L4
+    "dependabot/npm_and_yarn/lodash-4.17.21": ["dependencies"], // L4
+    "Feature/x": ["feature"], // prefixes are matched in lower case
+    "ops/x": [], // no mapped prefix: no type label
   };
   for (const [branch, type] of Object.entries(expected)) {
     assert.deepEqual(labelPullRequest(pr({ branch })).type, type, branch);
@@ -48,22 +53,36 @@ test("a branch prefix spans later slashes", () => {
   assert.deepEqual(labelPullRequest(pr({ branch: "feature/auth/login" })).type, ["feature"]);
 });
 
-test("priority: hotfix P0, customer-facing feature P1, internal feature P2, docs/refactor P3, else P2", () => {
-  const priority = (branch, files = []) => labelPullRequest(pr({ branch, files })).priority;
+test("priority labels are gh-prioritizer's answer for the same PR (X1)", () => {
+  for (const fixture of fixtures) {
+    const input = skillInput("pr-labeler", fixture);
+    const { priority, labels } = labelPullRequest(input);
+    const prioritizer = prioritize(skillInput("gh-prioritizer", fixture));
+    assert.equal(priority, prioritizer.priority, fixture.id);
+    assert.equal(labels.filter((l) => /^P\d-/.test(l)).length, priority ? 1 : 0, fixture.id);
+  }
+});
+
+test("priority: hotfix P0, customer-facing feature P1, internal feature P2, docs P3, else P2 (L1)", () => {
+  const priority = (branch, files = [], extra = {}) => labelPullRequest(pr({ branch, files, ...extra })).priority;
   assert.equal(priority("hotfix/x"), "P0-Critical");
   assert.equal(priority("feature/x", ["web/Button.jsx"]), "P1-High");
   assert.equal(priority("feature/x", ["services/api/users.go"]), "P1-High");
+  assert.equal(priority("feature/x", ["web/settings/Theme.vue"]), "P1-High");
   assert.equal(priority("feature/x", ["backend/jobs/export.py"]), "P2-Medium");
-  assert.equal(priority("docs/x"), "P3-Low");
-  assert.equal(priority("refactor/x"), "P3-Low");
-  assert.equal(priority("security/x"), "P2-Medium"); // no rule: default
-  assert.equal(priority("fix/x"), "P2-Medium");
+  assert.equal(priority("feature/x", ["lib/export.rb"]), "P2-Medium"); // the feature label alone is P2
+  assert.equal(priority("docs/x", ["docs/guide.md"]), "P3-Low");
+  assert.equal(priority("security/x", ["lib/a.c"]), "P0-Critical"); // the security label it gets
+  assert.equal(priority("fix/x", ["lib/a.c"]), "P1-High"); // the bug label it gets
+  assert.equal(priority("ops/x", ["lib/a.c"]), "P2-Medium"); // default
+  assert.equal(priority("ops/x", ["lib/a.c"], { labels: ["DO-NOT-MERGE"] }), null);
 });
 
-test("every pull request gets exactly one priority and one size label", () => {
+test("every pull request gets one size label and, unless it is skipped, one priority", () => {
   for (const fixture of fixtures) {
     const { labels } = labelPullRequest(skillInput("pr-labeler", fixture));
-    assert.equal(labels.filter((l) => /^P\d-/.test(l)).length, 1, fixture.id);
+    const skipped = fixture.labels.includes("DO-NOT-MERGE");
+    assert.equal(labels.filter((l) => /^P\d-/.test(l)).length, skipped ? 0 : 1, fixture.id);
     assert.equal(labels.filter((l) => l.startsWith("size/")).length, 1, fixture.id);
   }
 });
@@ -80,13 +99,19 @@ test("team rules use root-anchored paths (L2) and literal extensions (L5)", () =
   assert.deepEqual(team(["tests/a.py", "src/b.spec.js"]), ["team/qa"]);
 });
 
-test("domain globs are substring globs over the branch and every path segment (L3)", () => {
+test("domain labels match whole words, in any case (L3)", () => {
   const domain = (branch, files = []) => labelPullRequest(pr({ branch, files })).domain;
   assert.deepEqual(domain("feature/payment-retry"), ["domain/payment"]);
-  assert.deepEqual(domain("chore/build"), ["domain/ui"]);
-  assert.deepEqual(domain("chore/x", ["src/rapid.ts"]), ["domain/api"]);
-  assert.deepEqual(domain("chore/x", ["src/authors.ts"]), ["domain/auth"]);
-  assert.deepEqual(domain("chore/x", ["src/OAuth.ts"]), []); // case-sensitive
+  assert.deepEqual(domain("ops/build"), []); // not "ui"
+  assert.deepEqual(domain("ops/x", [".github/workflows/build.yml"]), []);
+  assert.deepEqual(domain("ops/x", ["docs/guide/contributing.md"]), ["domain/docs"]);
+  assert.deepEqual(domain("ops/x", ["packages/ui/Modal.tsx"]), ["domain/ui"]);
+  assert.deepEqual(domain("ops/x", ["src/rapid.ts"]), []); // not "api"
+  assert.deepEqual(domain("ops/x", ["src/authors.ts"]), []); // not "auth"
+  assert.deepEqual(domain("ops/x", ["src/Auth/Login.cs"]), ["domain/auth"]);
+  assert.deepEqual(domain("feature/github-oauth"), ["domain/auth"]);
+  assert.deepEqual(domain("ops/x", ["src/OAuth.ts"]), ["domain/auth"]); // the word "oauth"
+  assert.deepEqual(domain("ops/x", ["src/OAuthButton.ts"]), []); // one longer word
 });
 
 test("the result does not depend on file order", () => {

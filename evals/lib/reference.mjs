@@ -29,7 +29,7 @@ export function referenceResults(fixtures) {
   // pr-labeler also assigns a priority label. How often does it disagree with
   // the gh-prioritizer answer for the same pull request?
   const differ = fixtures.filter((f) => {
-    const labelerPriority = f.gold["pr-labeler"].find((label) => /^P\d-/.test(label));
+    const labelerPriority = f.gold["pr-labeler"].find((label) => /^P\d-/.test(label)) ?? null; // no label: skipped
     return labelerPriority !== f.gold["gh-prioritizer"];
   });
 

@@ -1,5 +1,5 @@
 {
-  "description": "Hand-labelled pull requests for the pr-labeler and gh-prioritizer evals. Gold answers follow the rules exactly as the skills document them, defects included; `traps` lists the documented ambiguities (evals/README.md) a fixture exercises. Each gold answer was labelled by hand, then cross-checked against the reference implementation in evals/lib/.",
+  "description": "Hand-labelled pull requests for the pr-labeler and gh-prioritizer evals. Gold answers follow the rules exactly as the skills document them; `traps` lists the documented ambiguities that are still open (evals/README.md) a fixture exercises. Gold answers were first labelled by hand against the original skill text and recorded in PR #7 (evals/baseline/). After the decision-rule fixes, each answer the new rules change was regenerated from the reference implementation in evals/lib/ and reviewed against the new skill text.",
   "fixtures": [
     {
       "id": "saved-card-selector",
@@ -25,10 +25,10 @@
       "files": ["backend/jobs/report_export.py", "backend/jobs/test_report_export.py"],
       "additions": 140,
       "deletions": 10,
-      "traps": ["L1"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P2-Medium", "feature", "size/M", "team/backend"],
-        "gh-prioritizer": "P1-High"
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -42,7 +42,7 @@
       "deletions": 12,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "domain/auth", "size/S", "team/backend", "team/security"],
+        "pr-labeler": ["P0-Critical", "bug", "domain/auth", "size/S", "team/backend", "team/security"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -70,10 +70,10 @@
       "files": ["config/cache.json"],
       "additions": 3,
       "deletions": 3,
-      "traps": ["P5"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P0-Critical", "hotfix", "size/XS"],
-        "gh-prioritizer": "P3-Low"
+        "gh-prioritizer": "P0-Critical"
       }
     },
     {
@@ -87,7 +87,7 @@
       "deletions": 180,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/L", "team/backend"],
+        "pr-labeler": ["P2-Medium", "refactor", "size/L", "team/backend"],
         "gh-prioritizer": "P2-Medium"
       }
     },
@@ -100,9 +100,9 @@
       "files": ["README.md"],
       "additions": 1,
       "deletions": 1,
-      "traps": ["P8"],
+      "traps": ["P10"],
       "gold": {
-        "pr-labeler": ["P3-Low", "documentation", "domain/docs", "size/XS"],
+        "pr-labeler": ["P1-High", "documentation", "domain/docs", "size/XS"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -115,10 +115,10 @@
       "files": ["docs/api/pagination.md", "docs/api/examples.md"],
       "additions": 120,
       "deletions": 8,
-      "traps": ["L2", "P2"],
+      "traps": ["L2"],
       "gold": {
         "pr-labeler": ["P3-Low", "documentation", "domain/api", "domain/docs", "size/M"],
-        "gh-prioritizer": "P1-High"
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -132,7 +132,7 @@
       "deletions": 2,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "security", "security-review", "size/S", "team/backend"],
+        "pr-labeler": ["P0-Critical", "security", "security-review", "size/S", "team/backend"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -162,8 +162,8 @@
       "deletions": 12,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "dependencies", "size/XS"],
-        "gh-prioritizer": "P1-High"
+        "pr-labeler": ["P3-Low", "dependencies", "size/XS"],
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -175,9 +175,9 @@
       "files": [".github/workflows/validate.yml"],
       "additions": 1,
       "deletions": 1,
-      "traps": ["L4"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/XS", "team/devops"],
+        "pr-labeler": ["P3-Low", "dependencies", "size/XS", "team/devops"],
         "gh-prioritizer": "P3-Low"
       }
     },
@@ -190,9 +190,9 @@
       "files": ["web/src/settings/ThemeToggle.tsx", "web/src/settings/ThemeToggle.test.tsx"],
       "additions": 88,
       "deletions": 3,
-      "traps": ["L4", "P7"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/S", "team/frontend", "team/qa"],
+        "pr-labeler": ["P1-High", "feature", "size/S", "team/frontend", "team/qa"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -205,9 +205,9 @@
       "files": [".github/workflows/ci.yaml"],
       "additions": 40,
       "deletions": 22,
-      "traps": ["L4", "L5"],
+      "traps": ["L5"],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/S"],
+        "pr-labeler": ["P3-Low", "chore", "size/S"],
         "gh-prioritizer": "P3-Low"
       }
     },
@@ -220,10 +220,10 @@
       "files": ["infra/terraform/database.tf", "infra/terraform/variables.tf"],
       "additions": 6,
       "deletions": 2,
-      "traps": ["L1"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P2-Medium", "feature", "size/XS", "team/devops"],
-        "gh-prioritizer": "P1-High"
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -250,9 +250,9 @@
       "files": [".github/workflows/build.yml", "scripts/build.sh"],
       "additions": 30,
       "deletions": 5,
-      "traps": ["L3"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "domain/ui", "performance", "size/XS", "team/devops"],
+        "pr-labeler": ["P2-Medium", "performance", "size/XS", "team/devops"],
         "gh-prioritizer": "P2-Medium"
       }
     },
@@ -265,10 +265,10 @@
       "files": ["docs/guide/contributing.md"],
       "additions": 150,
       "deletions": 0,
-      "traps": ["L3"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "documentation", "domain/docs", "domain/ui", "size/M"],
-        "gh-prioritizer": "P2-Medium"
+        "pr-labeler": ["P3-Low", "documentation", "domain/docs", "size/M"],
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -280,10 +280,10 @@
       "files": ["frontend/src/blog/AuthorAvatar.tsx", "frontend/src/blog/authors.ts"],
       "additions": 70,
       "deletions": 4,
-      "traps": ["L3", "P2"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P1-High", "domain/auth", "feature", "size/S", "team/frontend"],
-        "gh-prioritizer": "P0-Critical"
+        "pr-labeler": ["P1-High", "feature", "size/S", "team/frontend"],
+        "gh-prioritizer": "P1-High"
       }
     },
     {
@@ -295,10 +295,10 @@
       "files": ["backend/cache/keys.py"],
       "additions": 18,
       "deletions": 6,
-      "traps": ["P2"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/XS", "team/backend"],
-        "gh-prioritizer": "P1-High"
+        "pr-labeler": ["P2-Medium", "refactor", "size/XS", "team/backend"],
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -310,10 +310,10 @@
       "files": ["backend/http/retry.py"],
       "additions": 22,
       "deletions": 3,
-      "traps": ["P2"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/XS", "team/backend"],
-        "gh-prioritizer": "P1-High"
+        "pr-labeler": ["P2-Medium", "refactor", "size/XS", "team/backend"],
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -325,10 +325,10 @@
       "files": ["backend/cache/warmup.py", "backend/cache/test_warmup.py"],
       "additions": 55,
       "deletions": 20,
-      "traps": ["P2"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P2-Medium", "performance", "size/S", "team/backend"],
-        "gh-prioritizer": "P0-Critical"
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -340,10 +340,10 @@
       "files": ["backend/exports/worker.py"],
       "additions": 130,
       "deletions": 110,
-      "traps": ["P8"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/M", "team/backend"],
-        "gh-prioritizer": "P1-High"
+        "pr-labeler": ["P2-Medium", "refactor", "size/M", "team/backend"],
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -355,10 +355,10 @@
       "files": ["packages/client/src/generated.ts", "packages/client/src/index.ts"],
       "additions": 480,
       "deletions": 20,
-      "traps": ["L4", "L6", "P9"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/XL"],
-        "gh-prioritizer": "P2-Medium"
+        "pr-labeler": ["P1-High", "chore", "size/XL"],
+        "gh-prioritizer": "P1-High"
       }
     },
     {
@@ -370,9 +370,9 @@
       "files": ["third_party/dateparse/parse.c", "third_party/dateparse/parse.h"],
       "additions": 501,
       "deletions": 0,
-      "traps": ["L4"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/XL"],
+        "pr-labeler": ["P1-High", "chore", "size/XL"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -387,7 +387,7 @@
       "deletions": 0,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/XS", "team/backend"],
+        "pr-labeler": ["P2-Medium", "refactor", "size/XS", "team/backend"],
         "gh-prioritizer": "P2-Medium"
       }
     },
@@ -400,10 +400,10 @@
       "files": ["frontend/src/components/Footer.tsx"],
       "additions": 1,
       "deletions": 1,
-      "traps": ["I1", "P8"],
+      "traps": ["I1"],
       "gold": {
-        "pr-labeler": ["P3-Low", "documentation", "domain/docs", "size/XS", "team/frontend"],
-        "gh-prioritizer": "P0-Critical"
+        "pr-labeler": ["P1-High", "documentation", "domain/docs", "size/XS", "team/frontend"],
+        "gh-prioritizer": "P1-High"
       }
     },
     {
@@ -417,7 +417,7 @@
       "deletions": 19,
       "traps": ["I1"],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/XS", "team/backend"],
+        "pr-labeler": ["P2-Medium", "refactor", "size/XS", "team/backend"],
         "gh-prioritizer": "P2-Medium"
       }
     },
@@ -432,7 +432,7 @@
       "deletions": 40,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "domain/api", "performance", "size/M", "team/backend"],
+        "pr-labeler": ["domain/api", "performance", "size/M", "team/backend"],
         "gh-prioritizer": null
       }
     },
@@ -445,10 +445,10 @@
       "files": ["frontend/src/settings/NotificationPreferences.tsx", "api/notifications/preferences.go"],
       "additions": 310,
       "deletions": 40,
-      "traps": ["P6"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P1-High", "domain/api", "feature", "size/L", "team/backend", "team/frontend"],
-        "gh-prioritizer": "P1-High"
+        "pr-labeler": ["P3-Low", "domain/api", "feature", "size/L", "team/backend", "team/frontend"],
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -462,7 +462,7 @@
       "deletions": 0,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "documentation", "domain/docs", "size/XS"],
+        "pr-labeler": ["P0-Critical", "documentation", "domain/docs", "size/XS"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -477,7 +477,7 @@
       "deletions": 10,
       "traps": ["L5"],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "size/XS"],
+        "pr-labeler": ["P1-High", "bug", "size/XS"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -507,7 +507,7 @@
       "deletions": 20,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "feature", "size/M", "team/backend", "team/devops"],
+        "pr-labeler": ["P0-Critical", "feature", "size/M", "team/backend", "team/devops"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -520,7 +520,7 @@
       "files": ["frontend/src/login/OAuthButton.tsx", "backend/sso/GitHubOAuthProvider.py"],
       "additions": 260,
       "deletions": 12,
-      "traps": ["P3"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P1-High", "domain/auth", "feature", "size/M", "team/backend", "team/frontend"],
         "gh-prioritizer": "P1-High"
@@ -535,10 +535,10 @@
       "files": ["tests/billing/test_invoice_totals.py", "tests/billing/fixtures/invoices.json"],
       "additions": 180,
       "deletions": 0,
-      "traps": ["L4"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/M", "team/qa"],
-        "gh-prioritizer": "P2-Medium"
+        "pr-labeler": ["P3-Low", "size/M", "team/qa", "testing"],
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -552,7 +552,7 @@
       "deletions": 3,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "size/XS", "team/backend"],
+        "pr-labeler": ["P1-High", "bug", "size/XS", "team/backend"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -567,7 +567,7 @@
       "deletions": 1,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P1-High", "domain/api", "domain/payment", "feature", "size/M", "team/backend", "team/frontend", "team/qa"],
+        "pr-labeler": ["P0-Critical", "domain/api", "domain/payment", "feature", "size/M", "team/backend", "team/frontend", "team/qa"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -582,7 +582,7 @@
       "deletions": 120,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P3-Low", "refactor", "size/L", "team/backend"],
+        "pr-labeler": ["P2-Medium", "refactor", "size/L", "team/backend"],
         "gh-prioritizer": "P2-Medium"
       }
     },
@@ -595,10 +595,10 @@
       "files": ["backend/audit/role_changes.py", "backend/audit/migrations/0042_role_audit.sql", "backend/audit/test_role_changes.py"],
       "additions": 460,
       "deletions": 39,
-      "traps": ["L1"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P2-Medium", "feature", "size/L", "team/backend"],
-        "gh-prioritizer": "P1-High"
+        "gh-prioritizer": "P2-Medium"
       }
     },
     {
@@ -612,7 +612,7 @@
       "deletions": 0,
       "traps": ["L5"],
       "gold": {
-        "pr-labeler": ["P2-Medium", "security", "security-review", "size/S", "team/security"],
+        "pr-labeler": ["P0-Critical", "security", "security-review", "size/S", "team/security"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -627,8 +627,8 @@
       "deletions": 20,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "size/S", "team/backend"],
-        "gh-prioritizer": "P0-Critical"
+        "pr-labeler": ["P1-High", "bug", "size/S", "team/backend"],
+        "gh-prioritizer": "P1-High"
       }
     },
     {
@@ -642,7 +642,7 @@
       "deletions": 10,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "dependencies", "size/XS", "team/devops"],
+        "pr-labeler": ["P1-High", "dependencies", "size/XS", "team/devops"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -657,7 +657,7 @@
       "deletions": 2,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "size/XS", "team/devops"],
+        "pr-labeler": ["P0-Critical", "bug", "size/XS", "team/devops"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -700,9 +700,9 @@
       "files": ["scripts/release.sh", "scripts/bootstrap.sh"],
       "additions": 40,
       "deletions": 38,
-      "traps": ["L4"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/S"],
+        "pr-labeler": ["P3-Low", "chore", "size/S"],
         "gh-prioritizer": "P3-Low"
       }
     },
@@ -717,7 +717,7 @@
       "deletions": 8,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "domain/api", "size/XS", "team/backend"],
+        "pr-labeler": ["P1-High", "bug", "domain/api", "size/XS", "team/backend"],
         "gh-prioritizer": "P1-High"
       }
     },
@@ -730,10 +730,10 @@
       "files": ["docs/runbooks/queue-backlog.md"],
       "additions": 64,
       "deletions": 0,
-      "traps": ["P8"],
+      "traps": [],
       "gold": {
         "pr-labeler": ["P3-Low", "documentation", "domain/docs", "size/S"],
-        "gh-prioritizer": "P0-Critical"
+        "gh-prioritizer": "P3-Low"
       }
     },
     {
@@ -747,7 +747,7 @@
       "deletions": 6,
       "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "bug", "size/XS", "team/devops"],
+        "pr-labeler": ["P0-Critical", "bug", "size/XS", "team/devops"],
         "gh-prioritizer": "P0-Critical"
       }
     },
@@ -760,9 +760,24 @@
       "files": ["lib/exports/date_format.rb", "lib/exports/date_format_spec.rb"],
       "additions": 120,
       "deletions": 10,
-      "traps": ["L4"],
+      "traps": [],
       "gold": {
-        "pr-labeler": ["P2-Medium", "size/M"],
+        "pr-labeler": ["P2-Medium", "chore", "size/M"],
+        "gh-prioritizer": "P2-Medium"
+      }
+    },
+    {
+      "id": "rotate-logs-default",
+      "title": "Rotate application logs weekly",
+      "body": "",
+      "branch": "ops/rotate-logs",
+      "labels": [],
+      "files": ["scripts/rotate_logs.sh"],
+      "additions": 35,
+      "deletions": 5,
+      "traps": [],
+      "gold": {
+        "pr-labeler": ["P2-Medium", "size/XS"],
         "gh-prioritizer": "P2-Medium"
       }
     }

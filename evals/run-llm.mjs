@@ -135,7 +135,7 @@ for (const skill of skills) {
     continue;
   }
 
-  const skillFiles = SKILL_CONTEXT[skill].map((rel) => readFileSync(join(ROOT, "skills", skill, rel), "utf8"));
+  const skillFiles = SKILL_CONTEXT[skill].map((rel) => readFileSync(join(ROOT, "skills", rel), "utf8"));
   const record = {
     skill,
     model: args.model,

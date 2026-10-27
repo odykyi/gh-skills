@@ -10,8 +10,10 @@ import { join } from "node:path";
 import { EVALS_DIR, ROOT } from "./fixtures.mjs";
 import { PRIORITIES } from "./gh-prioritizer.mjs";
 import { SKIP } from "./metrics.mjs";
+import { sameAnswer } from "./score.mjs";
 
 export const RESULTS_DIR = join(EVALS_DIR, "results");
+export const BASELINE_DIR = join(EVALS_DIR, "baseline");
 
 const MODEL_ORDER = ["haiku", "sonnet", "opus"];
 
@@ -159,9 +161,73 @@ export function renderDetail({ results }) {
   return out.join("\n").trimEnd();
 }
 
+/** The PR #7 runs and trap tags, kept so the effect of the fixes can be shown. */
+export function loadBaseline(dir = BASELINE_DIR) {
+  const info = JSON.parse(readFileSync(join(dir, "traps.json"), "utf8"));
+  return { ...info, results: loadResults(dir).filter((r) => r.skill) }; // traps.json is not a run
+}
+
+/** Agreement of a recorded run on a set of fixture ids, against the current gold. */
+function agreeOn(r, fixtures, ids) {
+  const answers = new Map(r.predictions.map((p) => [p.id, p.answer]));
+  const subset = fixtures.filter((f) => ids.has(f.id));
+  return { n: subset.length, agree: subset.filter((f) => sameAnswer(r.skill, f.gold[r.skill], answers.get(f.id))).length };
+}
+
+/**
+ * Before and after the fixes, on the same fixtures: the ones that carried a
+ * trap tag at PR #7 ("formerly trapped") and the ones that did not. "Before"
+ * is the recorded PR #7 summary against the PR #7 gold; "after" is the new run
+ * against the current gold.
+ */
+export function renderDelta({ fixtures, results, baseline, reference }) {
+  const ids = new Set(fixtures.map((f) => f.id));
+  const rows = [];
+  for (const r of results) {
+    const before = baseline.results.find((b) => b.skill === r.skill && b.model === r.model);
+    if (!before) continue;
+    const formerly = baseline.traps[r.skill];
+    const known = new Set(before.predictions.map((p) => p.id));
+    const trapIds = new Set(formerly.filter((id) => ids.has(id)));
+    const cleanIds = new Set(fixtures.filter((f) => known.has(f.id) && !formerly.includes(f.id)).map((f) => f.id));
+    const cell = (b, a) => `${pct(b)} → ${pct(a)}`;
+    rows.push([
+      r.skill,
+      r.resolvedModel,
+      cell(before.summary.traps, agreeOn(r, fixtures, trapIds)),
+      cell(before.summary.clean, agreeOn(r, fixtures, cleanIds)),
+      cell(before.summary, agreeOn(r, fixtures, known)),
+      `$${before.totals.costUsd.toFixed(2)} → $${r.totals.costUsd.toFixed(2)}`,
+    ]);
+  }
+  const doc = baseline.reference.documentedAlgorithm;
+  const x = baseline.reference.prLabelerPriorityDiffersFromPrioritizer;
+  const lines = [];
+  if (rows.length > 0) {
+    lines.push(
+      table(["Skill", "Model", "Formerly-trap fixtures", "Formerly-clean fixtures", "The 51 PR #7 fixtures", "Cost of the run"], rows),
+      "",
+    );
+  } else {
+    lines.push("_No LLM run has been recorded since the fixes._", "");
+  }
+  lines.push(
+    `Each cell reads *PR #7 → now*. "Formerly-trap" is the set of fixtures that carried a trap tag for the skill at PR #7 ` +
+      `(${baseline.traps["gh-prioritizer"].length} for gh-prioritizer, ${baseline.traps["pr-labeler"].length} for pr-labeler), ` +
+      `whatever tags they carry now. "Now" is scored against the current gold, which the fixes changed.`,
+    "",
+    `The documented gh-prioritizer algorithm, run verbatim, agreed with gold on ${doc.agree}/${doc.n} before ` +
+      `(it threw on ${doc.threw}) and agrees on ${reference.documented.agree}/${reference.documented.n} now. ` +
+      `pr-labeler's priority label differed from gh-prioritizer's on ${x.differ}/${x.n} pull requests before and on ` +
+      `${reference.crossSkill.differ}/${reference.crossSkill.n} now.`,
+  );
+  return lines.join("\n");
+}
+
 export const BLOCKS = [
   { file: "README.md", name: "evals-summary", render: renderSummary },
   { file: "evals/README.md", name: "evals-summary", render: renderSummary },
+  { file: "evals/README.md", name: "evals-delta", render: renderDelta },
   { file: "evals/README.md", name: "evals-detail", render: renderDetail },
 ];
 
