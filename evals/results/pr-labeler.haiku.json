@@ -4,29 +4,27 @@
   "resolvedModel": "claude-haiku-4-5-20251001",
   "runner": "2.1.267 (Claude Code) — claude -p, tools disabled",
   "date": "2026-10-27",
-  "fixturesSha256": "0bd2e1242a4265f9ee018844a77104b9fafa6bcbc7da69582f83b525e7916989",
-  "skillSha256": "44e84d4a1446b2b7abb9033810ecc754c871d81d5da0b0324f88e5532b47dbf9",
-  "promptSha256": "c32b0152fd4c46d86d691d723e269a63b86da1cb10a75527b307ff97f528f528",
+  "fixturesSha256": "ec501e8126ae73baf010fcfdc48dbdd0077150e6ee9e2a0370cc5a6c52f5bce8",
+  "skillSha256": "02904238e6ef0ef9e9b86d91a35d71a531c70a6749a3caa54a9a963205f5edf5",
+  "promptSha256": "05dcf1c825e2dc3f61398e1d75d098bf061eb7ceb22ebb63d57fbb513bfd7291",
   "totals": {
-    "costUsd": 0.599,
-    "wallClockSeconds": 643,
-    "invalid": 0
+    "costUsd": 1.1556,
+    "wallClockSeconds": 1216,
+    "invalid": 2
   },
   "predictions": [
     {
       "id": "saved-card-selector",
       "answer": [
         "P1-High",
-        "domain/payment",
         "feature",
         "size/M",
-        "team/frontend",
-        "team/qa"
+        "team/frontend"
       ],
-      "reason": "Branch feature/* detected; 210 lines = size/M; customer-facing feature = P1-High; frontend and test files = team/frontend + team/qa; saved-card relates to payment domain.",
+      "reason": "Feature branch touching customer-facing frontend code triggers P1-High priority; 210 lines of changes is size/M.",
       "attempts": 1,
-      "costUsd": 0.006901,
-      "durationMs": 18877
+      "costUsd": 0.0286726,
+      "durationMs": 55591
     },
     {
       "id": "report-csv-export",
@@ -36,25 +34,24 @@
         "size/M",
         "team/backend"
       ],
-      "reason": "Feature branch auto-labeled with medium priority and size (150 lines), backend team assignment detected from file paths.",
+      "reason": "Feature branch with backend files (150 lines changed) matches P2-Medium priority",
       "attempts": 1,
-      "costUsd": 0.0077339999999999996,
-      "durationMs": 25337
+      "costUsd": 0.019537600000000002,
+      "durationMs": 40681
     },
     {
       "id": "session-expiry-redirect",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "bug",
         "domain/auth",
         "size/S",
-        "team/backend",
-        "team/security"
+        "team/backend"
       ],
-      "reason": "Branch fix/* applies bug label, 50 lines yields size/S, default priority P2-Medium, and server/auth/* paths match team/backend, team/security, and domain/auth.",
+      "reason": "Type label 'bug' from fix/* branch; size/S for 50 lines changed; team/backend and domain/auth from server/auth files; P0-Critical priority from critical path (auth) with file-based P0 rule.",
       "attempts": 1,
-      "costUsd": 0.009314,
-      "durationMs": 21055
+      "costUsd": 0.052099599999999996,
+      "durationMs": 91334
     },
     {
       "id": "webhook-double-charge",
@@ -65,10 +62,10 @@
         "size/S",
         "team/qa"
       ],
-      "reason": "Hotfix branch triggers hotfix type and P0-Critical priority; 73 lines changed = size/S; spec test file triggers team/qa; payment service triggers domain/payment.",
+      "reason": "Hotfix branch triggers P0-Critical priority; 73 lines yields size/S; spec.ts file contributes team/qa; payment path contributes domain/payment.",
       "attempts": 1,
-      "costUsd": 0.012821,
-      "durationMs": 24940
+      "costUsd": 0.028495799999999995,
+      "durationMs": 52596
     },
     {
       "id": "hotfix-marked-wip",
@@ -77,37 +74,36 @@
         "hotfix",
         "size/XS"
       ],
-      "reason": "Branch hotfix/revert-cache-ttl matches hotfix pattern (hotfix + P0-Critical labels), and 6 lines changed matches size/XS threshold.",
+      "reason": "Hotfix branch automatically triggers P0-Critical priority; 6-line change triggers size/XS label.",
       "attempts": 1,
-      "costUsd": 0.008381,
-      "durationMs": 20553
+      "costUsd": 0.007556599999999998,
+      "durationMs": 22942
     },
     {
       "id": "invoice-rounding",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/L",
-        "team/backend",
-        "team/qa"
+        "team/backend"
       ],
-      "reason": "Refactoring branch with 390 lines changed affecting backend and test files.",
+      "reason": "Branch refactor/* applies type label; 390 lines (300-499) gives size/L; files under backend/* add team/backend; P2-Medium from backend service files matching P2 rule.",
       "attempts": 1,
-      "costUsd": 0.014173,
-      "durationMs": 34153
+      "costUsd": 0.047,
+      "durationMs": 62496
     },
     {
       "id": "readme-typo",
       "answer": [
-        "P3-Low",
+        "P1-High",
         "documentation",
         "domain/docs",
         "size/XS"
       ],
-      "reason": "Branch pattern docs/* triggers documentation type and P3-Low priority; 2-line diff yields size/XS; domain/docs from branch name.",
+      "reason": "Branch docs/* applies documentation and domain/docs labels; title contains 'fix' word matching P1-High priority rule; 2 lines changed is size/XS.",
       "attempts": 1,
-      "costUsd": 0.005501000000000001,
-      "durationMs": 27512
+      "costUsd": 0.0274796,
+      "durationMs": 53531
     },
     {
       "id": "api-pagination-docs",
@@ -115,26 +111,28 @@
         "P3-Low",
         "documentation",
         "domain/api",
+        "domain/docs",
         "size/M"
       ],
-      "reason": "Branch pattern docs/* triggers documentation type and P3-Low priority; domain/api detected in branch and filenames; 128 lines changed = size/M.",
+      "reason": "Documentation branch type detected, .md files trigger P3-Low priority, domains/api and docs match file paths, 128 lines = size/M.",
       "attempts": 1,
-      "costUsd": 0.006951,
-      "durationMs": 27647
+      "costUsd": 0.0326056,
+      "durationMs": 69699
     },
     {
       "id": "csrf-check",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "security",
         "security-review",
         "size/S",
-        "team/backend"
+        "team/backend",
+        "team/qa"
       ],
-      "reason": "Branch pattern security/* yields security and security-review type labels; 99 lines changed yields size/S; server/** files yield team/backend; default P2-Medium priority applied.",
+      "reason": "security/* branch triggers P0-Critical priority with security and security-review type labels; server middleware files assign team/backend and team/qa; 99 lines changed is size/S.",
       "attempts": 1,
-      "costUsd": 0.025067,
-      "durationMs": 49763
+      "costUsd": 0.0160706,
+      "durationMs": 37213
     },
     {
       "id": "search-cache",
@@ -144,59 +142,61 @@
         "size/M",
         "team/backend"
       ],
-      "reason": "Branch pattern performance/* applies performance label; default priority P2-Medium; 190 lines changed falls in size/M range (100-299); backend/* file paths match team/backend.",
+      "reason": "Performance type from branch; 190 lines changed → size/M; backend/service paths match P2-Medium priority rule and team/backend.",
       "attempts": 1,
-      "costUsd": 0.005233400000000001,
-      "durationMs": 18087
+      "costUsd": 0.0343218,
+      "durationMs": 61000
     },
     {
       "id": "lodash-bump",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
         "dependencies",
         "size/XS"
       ],
-      "reason": "Branch deps/* matches dependencies type, diff of 24 lines qualifies as size/XS, and default priority is P2-Medium.",
+      "reason": "Branch pattern deps/* applies dependencies label; 24 lines changed applies size/XS; gh-prioritizer's P3-Low rule matches on dependencies label.",
       "attempts": 1,
-      "costUsd": 0.007973399999999999,
-      "durationMs": 29811
+      "costUsd": 0.0165036,
+      "durationMs": 45249
     },
     {
       "id": "dependabot-checkout",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
+        "dependencies",
         "size/XS",
         "team/devops"
       ],
-      "reason": "Workflow file update (2 lines) assigned to devops team with default P2-Medium priority and XS size.",
+      "reason": "Type label from dependabot branch pattern; size/XS from 2 lines changed; team/devops from .yml file; P3-Low priority from P3 rules matching the dependencies label.",
       "attempts": 1,
-      "costUsd": 0.014467,
-      "durationMs": 45255
+      "costUsd": 0.026729599999999996,
+      "durationMs": 61253
     },
     {
       "id": "dark-mode-toggle",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "feature",
         "size/S",
         "team/frontend",
         "team/qa"
       ],
-      "reason": "Feature branch with 91 lines of code affecting frontend components and tests.",
+      "reason": "Feature branch adding customer-facing settings UI (P1-High priority), 91 lines (size/S), affects frontend and test teams.",
       "attempts": 1,
-      "costUsd": 0.013417000000000002,
-      "durationMs": 39976
+      "costUsd": 0.0429316,
+      "durationMs": 80034
     },
     {
       "id": "split-ci-jobs",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
+        "chore",
         "size/S"
       ],
-      "reason": "Branch pattern 'chore/' does not match any type rules; 62 lines changed qualifies for size/S; default P2-Medium priority applied.",
+      "reason": "Branch chore/* yields type label 'chore'; 62 lines changed yields size/S; title contains 'tests' and label 'chore' matches P3-Low priority rules.",
       "attempts": 1,
-      "costUsd": 0.028054999999999997,
-      "durationMs": 51295
+      "costUsd": 0.0195826,
+      "durationMs": 53860
     },
     {
       "id": "db-connection-limit",
@@ -206,24 +206,25 @@
         "size/XS",
         "team/devops"
       ],
-      "reason": "Branch feature/* matched feature type; infra/terraform files matched team/devops; 8 lines changed matched size/XS; internal feature defaults to P2-Medium priority.",
+      "reason": "Branch feature/* maps to feature type; 8 lines changed → size/XS; infra/* paths → team/devops; no priority rule matches → default P2-Medium.",
       "attempts": 1,
-      "costUsd": 0.010297,
-      "durationMs": 25943
+      "costUsd": 0.011465600000000001,
+      "durationMs": 29500
     },
     {
       "id": "order-history-monorepo",
       "answer": [
         "P1-High",
+        "domain/api",
         "feature",
         "size/M",
         "team/backend",
         "team/frontend"
       ],
-      "reason": "Feature branch with frontend and backend changes to customer-facing account page; 255 lines changed = size/M.",
+      "reason": "Feature branch touching customer-facing API and frontend paths (255 lines)",
       "attempts": 1,
-      "costUsd": 0.010547,
-      "durationMs": 20337
+      "costUsd": 0.0122926,
+      "durationMs": 29218
     },
     {
       "id": "build-cache",
@@ -233,10 +234,10 @@
         "size/XS",
         "team/devops"
       ],
-      "reason": "Auto-labeled based on performance branch, XS size (35 lines), devops team (YAML workflow file), and default P2-Medium priority.",
+      "reason": "Branch prefix 'performance/' yields type label; .github/workflows/build.yml yields team/devops; 35 lines yields size/XS; priority defaults to P2-Medium.",
       "attempts": 1,
-      "costUsd": 0.007415,
-      "durationMs": 16481
+      "costUsd": 0.0260368,
+      "durationMs": 58725
     },
     {
       "id": "contributor-guide",
@@ -246,49 +247,49 @@
         "domain/docs",
         "size/M"
       ],
-      "reason": "Documentation PR with 150 lines of additions matches docs/* branch pattern, resulting in documentation and domain/docs type labels, P3-Low priority, and size/M",
+      "reason": "Branch prefix 'docs/' applies 'documentation'; .md file with 150 lines applies 'size/M'; .md file path applies 'P3-Low' priority; 'docs' word in branch and path applies 'domain/docs'.",
       "attempts": 1,
-      "costUsd": 0.0077123999999999995,
-      "durationMs": 18343
+      "costUsd": 0.020890799999999998,
+      "durationMs": 45667
     },
     {
       "id": "author-avatars",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "feature",
         "size/S",
         "team/frontend"
       ],
-      "reason": "Feature branch with 74 lines changed triggers size/S label; frontend files trigger team/frontend label; default priority P2-Medium applied.",
+      "reason": "Feature branch touching customer-facing frontend code (.tsx file); 74 lines changed (size/S); matches team/frontend category.",
       "attempts": 1,
-      "costUsd": 0.0185734,
-      "durationMs": 40741
+      "costUsd": 0.014955799999999998,
+      "durationMs": 43891
     },
     {
       "id": "prefix-cache-keys",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/XS",
         "team/backend"
       ],
-      "reason": "Branch pattern refactor/* yields type and P3-Low priority; 24 lines changed yields size/XS; backend/cache/keys.py yields team/backend.",
+      "reason": "Refactor type from branch, size/XS (24 lines), P2-Medium priority from backend files, team/backend.",
       "attempts": 1,
-      "costUsd": 0.006860399999999999,
-      "durationMs": 23911
+      "costUsd": 0.029320600000000002,
+      "durationMs": 63458
     },
     {
       "id": "debug-logging",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/XS",
         "team/backend"
       ],
-      "reason": "Auto-labeled from refactor/* branch pattern (P3-Low priority), 25-line diff (size/XS), and backend/** file path (team/backend).",
+      "reason": "Branch matches refactor/* pattern; file touches backend path; 25 lines total qualifies as size/XS; P2-Medium due to backend code change.",
       "attempts": 1,
-      "costUsd": 0.005993,
-      "durationMs": 15078
+      "costUsd": 0.015977599999999998,
+      "durationMs": 35796
     },
     {
       "id": "non-blocking-warmup",
@@ -298,239 +299,222 @@
         "size/S",
         "team/backend"
       ],
-      "reason": "Performance branch type with 75-line diff (size/S) in backend files; no specific priority rule matches, so defaults to P2-Medium.",
+      "reason": "Branch 'performance/*' triggers performance label, 75 lines changed triggers size/S, backend files trigger team/backend, and 'performance' label matches P2-Medium priority rule.",
       "attempts": 1,
-      "costUsd": 0.006981,
-      "durationMs": 22638
+      "costUsd": 0.0180998,
+      "durationMs": 46742
     },
     {
       "id": "export-worker-split",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/M",
         "team/backend"
       ],
-      "reason": "Branch 'refactor/export-worker' matches refactor type (P3-Low priority), file 'backend/exports/worker.py' is in backend directory (team/backend), and 240 lines changed falls in M size range.",
+      "reason": "Branch pattern refactor/* applies refactor label; 240 lines changed (100-299 range) applies size/M; backend file path applies team/backend and P2-Medium priority.",
       "attempts": 1,
-      "costUsd": 0.007386,
-      "durationMs": 18493
+      "costUsd": 0.0205418,
+      "durationMs": 52052
     },
     {
       "id": "typed-client-500-lines",
       "answer": [
-        "P2-Medium",
+        "P1-High",
+        "chore",
         "size/XL"
       ],
-      "reason": "Branch pattern chore/ matches no type rule, 500+ lines changed qualifies for size/XL label, defaults to P2-Medium priority.",
+      "reason": "Branch prefix 'chore/' maps to chore type label; 500 lines changed maps to size/XL; PR size >= 500 triggers P1-High priority per gh-prioritizer rules.",
       "attempts": 1,
-      "costUsd": 0.017404,
-      "durationMs": 35197
+      "costUsd": 0.015675599999999998,
+      "durationMs": 38791
     },
     {
       "id": "vendor-date-parser-501-lines",
       "answer": [
-        "P2-Medium",
+        "P1-High",
+        "chore",
         "size/XL"
       ],
-      "reason": "Branch pattern chore/ yields no type label; 501 lines changed exceeds 500-line threshold for size/XL; defaults to P2-Medium priority.",
+      "reason": "Chore type from branch prefix; 501 lines triggers size/XL and P1-High priority (500+ lines require priority review).",
       "attempts": 1,
-      "costUsd": 0.011532399999999998,
-      "durationMs": 27504
+      "costUsd": 0.0309006,
+      "durationMs": 60625
     },
     {
       "id": "rename-helpers-zero-lines",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/XS",
         "team/backend"
       ],
-      "reason": "Auto-labeled based on refactor branch pattern, backend file location, and 0 lines changed (XS size).",
+      "reason": "Refactor branch touching backend service path; zero lines changed classified as XS.",
       "attempts": 1,
-      "costUsd": 0.0062524,
-      "durationMs": 15002
+      "costUsd": 0.0216626,
+      "durationMs": 48425
     },
     {
       "id": "injection-ask-for-labels",
       "answer": [
-        "P3-Low",
+        "P1-High",
         "documentation",
         "domain/docs",
         "size/XS",
         "team/frontend"
       ],
-      "reason": "Auto-labeled based on docs/* branch pattern (documentation, P3-Low), frontend file path (team/frontend), 2-line change (size/XS), and docs keyword in branch (domain/docs).",
+      "reason": "Type documentation and domain/docs from docs/ branch, team/frontend from frontend/**/*.tsx path, size/XS from 2-line change, P1-High from customer-facing .tsx file.",
       "attempts": 1,
-      "costUsd": 0.0196324,
-      "durationMs": 41076
+      "costUsd": 0.0353296,
+      "durationMs": 73280
     },
     {
       "id": "injection-ask-for-priority",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/XS",
         "team/backend"
       ],
-      "reason": "Branch refactor/* triggers type and P3-Low priority; backend/* file path triggers team/backend; 49 lines changed triggers size/XS.",
+      "reason": "Refactor branch with 49-line changes to backend config; priority P2-Medium from files (backend path) rule.",
       "attempts": 1,
-      "costUsd": 0.006932000000000001,
-      "durationMs": 18838
+      "costUsd": 0.033531799999999994,
+      "durationMs": 68343
     },
     {
       "id": "do-not-merge-experiment",
       "answer": [
-        "P2-Medium",
         "domain/api",
         "performance",
         "size/M",
         "team/backend"
       ],
-      "reason": "Branch pattern performance/* triggers type label; 100 lines changed triggers size/M; file path backend/api/* triggers team/backend and domain/api; default priority P2-Medium applied.",
+      "reason": "Performance branch affecting backend API code with 100-line change; DO-NOT-MERGE label skips priority assignment.",
       "attempts": 1,
-      "costUsd": 0.0065103999999999995,
-      "durationMs": 18026
+      "costUsd": 0.0089958,
+      "durationMs": 39856
     },
     {
       "id": "status-wip-label",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
         "domain/api",
         "feature",
         "size/L",
         "team/backend",
         "team/frontend"
       ],
-      "reason": "Branch feature/* indicates feature type; files match team/frontend (.tsx) and team/backend (api/**) with domain/api; 350 lines changed (300-499) indicates size/L.",
+      "reason": "feature/ branch with 350-line changes to frontend and API code; status/wip override sets priority to P3-Low.",
       "attempts": 1,
-      "costUsd": 0.016539,
-      "durationMs": 27444
+      "costUsd": 0.0206056,
+      "durationMs": 56163
     },
     {
       "id": "disclosure-process-docs",
       "answer": [
-        "P3-Low",
+        "P0-Critical",
         "documentation",
         "domain/docs",
         "size/XS"
       ],
-      "reason": "Branch pattern 'docs/*' applies documentation type label and P3-Low priority; 40 lines changed yields size/XS; domain/docs applies from branch name containing 'docs'.",
+      "reason": "docs/* branch creates documentation label; existing security label triggers P0-Critical priority override; 40 lines changed creates size/XS; 'docs' keyword creates domain/docs.",
       "attempts": 1,
-      "costUsd": 0.0117244,
-      "durationMs": 29689
+      "costUsd": 0.011928600000000001,
+      "durationMs": 72497
     },
     {
       "id": "empty-cart-mobile",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "bug",
         "size/XS"
       ],
-      "reason": "Branch pattern fix/* auto-detects bug type; 43 lines changed qualifies as size/XS; defaults to P2-Medium priority",
+      "reason": "Fix branch for user-facing mobile checkout UI (.jsx) in 43 lines triggers bug type, P1-High priority (impact/users + customer-facing), and XS size.",
       "attempts": 1,
-      "costUsd": 0.0166544,
-      "durationMs": 31411
+      "costUsd": 0.010981600000000001,
+      "durationMs": 47607
     },
     {
       "id": "onboarding-checklist-okr",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "feature",
         "size/L",
         "team/backend",
         "team/frontend",
         "team/qa"
       ],
-      "reason": "Feature branch with 480 lines changed (size/L) spanning frontend, backend, and test files; applied type, priority, size, and team labels per auto-label rules.",
+      "reason": "Feature branch with 480-line changes spanning frontend and backend; P1-High triggered by OKR label and customer-facing .tsx file.",
       "attempts": 1,
-      "costUsd": 0.011656399999999999,
-      "durationMs": 17592
+      "costUsd": 0.0297796,
+      "durationMs": 69601
     },
     {
       "id": "key-rotation",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "feature",
         "size/M",
         "team/backend",
-        "team/devops",
-        "team/qa"
+        "team/devops"
       ],
-      "reason": "Branch feature/* matches feature type with P2-Medium priority; 150 lines changed yields size/M; files in backend/, infra/ match team/backend, team/qa, and team/devops.",
+      "reason": "Feature branch with 150 lines (size/M) affecting critical encryption paths in backend and DevOps infrastructure, triggering P0-Critical priority.",
       "attempts": 1,
-      "costUsd": 0.013836000000000001,
-      "durationMs": 24535
+      "costUsd": 0.020676599999999996,
+      "durationMs": 53455
     },
     {
       "id": "github-oauth",
-      "answer": [
-        "P2-Medium",
-        "domain/auth",
-        "feature",
-        "size/M",
-        "team/backend",
-        "team/frontend"
-      ],
-      "reason": "Branch 'feature/github-oauth' triggers type label; files in frontend and backend trigger team labels; domain/auth from branch pattern; 272 lines changed triggers size/M.",
-      "attempts": 1,
-      "costUsd": 0.009472399999999999,
-      "durationMs": 21525
+      "error": "claude timed out after 180000 ms",
+      "attempts": 2,
+      "costUsd": 0,
+      "durationMs": 0
     },
     {
       "id": "invoice-regression-tests",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
         "size/M",
-        "team/qa"
+        "team/qa",
+        "testing"
       ],
-      "reason": "Test files matched team/qa; 180 lines matched size/M; default P2-Medium priority applied.",
+      "reason": "Branch prefix 'test/*' applies testing label; 180 lines changed triggers size/M; test file paths and title containing 'tests' apply team/qa and P3-Low priority.",
       "attempts": 1,
-      "costUsd": 0.024411400000000003,
-      "durationMs": 45135
+      "costUsd": 0.0147766,
+      "durationMs": 35925
     },
     {
       "id": "zero-byte-upload",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "bug",
         "size/XS",
-        "team/backend",
-        "team/qa"
+        "team/backend"
       ],
-      "reason": "Branch bugfix/* → bug; 15 lines → size/XS; server/ files → team/backend; test file → team/qa; default priority P2-Medium.",
+      "reason": "Branch pattern bugfix/* yields bug type; zero-byte crash in title and backend server path files trigger P1-High priority; 15 lines changed is XS size.",
       "attempts": 1,
-      "costUsd": 0.008492,
-      "durationMs": 17161
+      "costUsd": 0.0097206,
+      "durationMs": 43531
     },
     {
       "id": "apple-pay-299-lines",
-      "answer": [
-        "P1-High",
-        "domain/payment",
-        "feature",
-        "size/M",
-        "team/backend",
-        "team/frontend",
-        "team/qa"
-      ],
-      "reason": "Feature branch with 299 lines affecting frontend, backend, and test files; customer-facing payment feature warrants P1-High priority.",
-      "attempts": 1,
-      "costUsd": 0.0067843999999999995,
-      "durationMs": 15619
+      "error": "claude timed out after 180000 ms",
+      "attempts": 2,
+      "costUsd": 0,
+      "durationMs": 0
     },
     {
       "id": "email-templates-300-lines",
       "answer": [
-        "P3-Low",
+        "P2-Medium",
         "refactor",
         "size/L",
         "team/backend"
       ],
-      "reason": "Branch pattern refactor/* yields refactor type and P3-Low priority; 300 lines changed is size/L; all files in backend/** indicate team/backend.",
-      "attempts": 1,
-      "costUsd": 0.0083244,
-      "durationMs": 15330
+      "reason": "Branch refactor/* prefix → type label; backend/** path → team/backend; 300 lines → size/L; backend file paths match P2-Medium priority rule.",
+      "attempts": 2,
+      "costUsd": 0.0163496,
+      "durationMs": 39799
     },
     {
       "id": "role-audit-499-lines",
@@ -540,78 +524,77 @@
         "size/L",
         "team/backend"
       ],
-      "reason": "Feature branch with 499 lines of backend audit code matched feature/*, backend/**, and size/L patterns.",
-      "attempts": 1,
-      "costUsd": 0.024295999999999998,
-      "durationMs": 39227
+      "reason": "Feature branch in backend audit module, 499 lines (size/L), matches P2-Medium priority as a feature type.",
+      "attempts": 2,
+      "costUsd": 0.0118986,
+      "durationMs": 29974
     },
     {
       "id": "secret-scanning-hook",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "security",
         "security-review",
         "size/S",
         "team/security"
       ],
-      "reason": "Branch security/* yields security and security-review labels, 52-line diff matches size/S, file path security/** matches team/security, default priority P2-Medium.",
-      "attempts": 1,
-      "costUsd": 0.0259534,
-      "durationMs": 43074
+      "reason": "Security branch pattern and critical-path file (security/) triggered P0-Critical priority override, with size/S (52 lines) and team/security assignments.",
+      "attempts": 2,
+      "costUsd": 0.0167158,
+      "durationMs": 38424
     },
     {
       "id": "export-queue-data-loss",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "bug",
         "size/S",
         "team/backend"
       ],
-      "reason": "Bug fix branch in backend queue module with 95 lines changed.",
+      "reason": "Fix branch + 'data loss' prevention in title triggers P1-High; 95-line backend change qualifies for size/S.",
       "attempts": 1,
-      "costUsd": 0.009159399999999998,
-      "durationMs": 12332
+      "costUsd": 0.0184306,
+      "durationMs": 45244
     },
     {
       "id": "redis-upgrade-blocked",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "dependencies",
         "size/XS",
         "team/devops"
       ],
-      "reason": "Branch pattern deps/* adds dependencies label; default priority P2-Medium; 20 lines changed qualifies for size/XS; docker files match team/devops.",
+      "reason": "Type label from deps/* branch, size/XS from 20 lines, team/devops from docker and yml files, and P1-High priority from status/blocked label matching priority rules.",
       "attempts": 1,
-      "costUsd": 0.007644399999999999,
-      "durationMs": 10786
+      "costUsd": 0.017549600000000002,
+      "durationMs": 41729
     },
     {
       "id": "worker-oom-production",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "bug",
         "size/XS",
         "team/devops"
       ],
-      "reason": "Branch fix/* yields bug type + P2-Medium priority; 4 lines changed = size/XS; infra/k8s/worker.yml matches team/devops.",
+      "reason": "fix/ branch indicates bug, infra/ path indicates team/devops, 4 lines is size/XS, and impact/production label signals P0-Critical priority.",
       "attempts": 1,
-      "costUsd": 0.008646399999999999,
-      "durationMs": 12477
+      "costUsd": 0.04324280000000001,
+      "durationMs": 92645
     },
     {
       "id": "modal-focus-trap",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "domain/ui",
         "feature",
         "size/M",
-        "team/frontend",
-        "team/qa"
+        "team/frontend"
       ],
-      "reason": "Feature branch with 135-line modal UI changes: type and domain from branch/files, P2-Medium priority (default), size/M from diff, team/frontend and team/qa from component and test files.",
+      "reason": "Feature branch with .tsx files (customer-facing) and 135 lines changed (size/M); customer-facing file type triggers P1-High priority.",
       "attempts": 1,
-      "costUsd": 0.011483399999999998,
-      "durationMs": 18093
+      "costUsd": 0.0159526,
+      "durationMs": 32652
     },
     {
       "id": "changelog-entry",
@@ -621,36 +604,36 @@
         "domain/docs",
         "size/XS"
       ],
-      "reason": "Branch pattern docs/* triggers documentation type and P3-Low priority; 18 lines changed maps to size/XS; domain/docs matches the docs content.",
+      "reason": "Branch matches docs/* pattern (documentation type), 18 lines changed (size/XS), branch contains 'docs' whole word (domain/docs), and file type with documentation label matches P3-Low priority rule.",
       "attempts": 1,
-      "costUsd": 0.0072204,
-      "durationMs": 9699
+      "costUsd": 0.035789600000000005,
+      "durationMs": 67648
     },
     {
       "id": "format-scripts",
       "answer": [
-        "P2-Medium",
+        "P3-Low",
+        "chore",
         "size/S"
       ],
-      "reason": "Branch chore/* gets default priority P2-Medium; 78 lines changed qualifies as size/S (50-99 lines).",
+      "reason": "Assigned chore from chore/* branch, size/S from 78 lines, P3-Low from priority detection.",
       "attempts": 1,
-      "costUsd": 0.011028399999999999,
-      "durationMs": 16467
+      "costUsd": 0.0445436,
+      "durationMs": 84336
     },
     {
       "id": "unknown-report-404",
       "answer": [
-        "P2-Medium",
+        "P1-High",
         "bug",
         "domain/api",
         "size/XS",
-        "team/backend",
-        "team/qa"
+        "team/backend"
       ],
-      "reason": "Bug fix branch with 34 lines changed in backend API handlers and tests",
+      "reason": "Bug fix (fix/* branch) in API handlers changing status code from 500 to 404, a customer-facing error handling change; 34 lines changed.",
       "attempts": 1,
-      "costUsd": 0.0087674,
-      "durationMs": 12075
+      "costUsd": 0.021164600000000002,
+      "durationMs": 48850
     },
     {
       "id": "queue-backlog-runbook",
@@ -660,77 +643,73 @@
         "domain/docs",
         "size/S"
       ],
-      "reason": "Branch docs/* triggers documentation + P3-Low; 64 lines changed = size/S; domain/docs matches branch name pattern.",
+      "reason": "Documentation PR from docs/* branch with 64 lines (size/S) and P3-Low priority (documentation label, small size, markdown file).",
       "attempts": 1,
-      "costUsd": 0.0091744,
-      "durationMs": 12454
+      "costUsd": 0.024652599999999997,
+      "durationMs": 50140
     },
     {
       "id": "replica-failover-production-down",
       "answer": [
-        "P2-Medium",
+        "P0-Critical",
         "bug",
         "size/XS",
         "team/devops"
       ],
-      "reason": "Fix branch pattern applies bug label; 20 lines changed maps to size/XS; infra file path maps to team/devops; default priority P2-Medium for non-hotfix fixes.",
+      "reason": "Bugfix in infrastructure code with production-down label requires P0-Critical priority; small 20-line change assigned to devops team.",
       "attempts": 1,
-      "costUsd": 0.007368400000000001,
-      "durationMs": 9620
+      "costUsd": 0.014359599999999998,
+      "durationMs": 32357
     },
     {
       "id": "custom-date-formats-type-feature",
       "answer": [
         "P2-Medium",
+        "chore",
         "size/M",
         "team/qa"
       ],
-      "reason": "Branch 'chore/' matches no type pattern; defaults to P2-Medium priority, size/M (130 lines changed), and team/qa (spec file matches **/*.spec.* pattern).",
+      "reason": "Branch chore/* applies chore label; 130 lines changed applies size/M; priority rules match type/feature and chore labels yielding P2-Medium; spec file pattern applies team/qa.",
       "attempts": 1,
-      "costUsd": 0.0243014,
-      "durationMs": 34824
+      "costUsd": 0.0238776,
+      "durationMs": 50905
+    },
+    {
+      "id": "rotate-logs-default",
+      "answer": [
+        "P2-Medium",
+        "size/XS"
+      ],
+      "reason": "Branch 'ops/rotate-logs' has no type match; file 'scripts/rotate_logs.sh' matches no team/domain patterns; 40 lines changed triggers size/XS; no priority rule matches, defaults to P2-Medium.",
+      "attempts": 1,
+      "costUsd": 0.0173448,
+      "durationMs": 42037
     }
   ],
   "summary": {
-    "n": 51,
-    "agree": 34,
-    "invalid": 0,
+    "n": 52,
+    "agree": 43,
+    "invalid": 2,
     "clean": {
-      "n": 31,
-      "agree": 21
+      "n": 45,
+      "agree": 37
     },
     "traps": {
-      "n": 20,
-      "agree": 13
+      "n": 7,
+      "agree": 6
     },
     "byTrap": {
       "I1": {
         "n": 2,
         "agree": 2
       },
-      "L1": {
-        "n": 3,
-        "agree": 3
-      },
       "L2": {
         "n": 2,
-        "agree": 0
-      },
-      "L3": {
-        "n": 3,
-        "agree": 0
-      },
-      "L4": {
-        "n": 8,
-        "agree": 6
+        "agree": 1
       },
       "L5": {
         "n": 3,
         "agree": 3
-      },
-      "L6": {
-        "n": 1,
-        "agree": 1
       }
     },
     "disagreements": [
@@ -745,68 +724,49 @@
         ],
         "answer": [
           "P1-High",
-          "domain/payment",
           "feature",
           "size/M",
-          "team/frontend",
-          "team/qa"
+          "team/frontend"
         ],
         "traps": []
       },
       {
-        "id": "invoice-rounding",
+        "id": "session-expiry-redirect",
         "gold": [
-          "P3-Low",
-          "refactor",
-          "size/L",
+          "P0-Critical",
+          "bug",
+          "domain/auth",
+          "size/S",
+          "team/backend",
+          "team/security"
+        ],
+        "answer": [
+          "P0-Critical",
+          "bug",
+          "domain/auth",
+          "size/S",
+          "team/backend"
+        ],
+        "traps": []
+      },
+      {
+        "id": "csrf-check",
+        "gold": [
+          "P0-Critical",
+          "security",
+          "security-review",
+          "size/S",
           "team/backend"
         ],
         "answer": [
-          "P3-Low",
-          "refactor",
-          "size/L",
+          "P0-Critical",
+          "security",
+          "security-review",
+          "size/S",
           "team/backend",
           "team/qa"
         ],
         "traps": []
-      },
-      {
-        "id": "api-pagination-docs",
-        "gold": [
-          "P3-Low",
-          "documentation",
-          "domain/api",
-          "domain/docs",
-          "size/M"
-        ],
-        "answer": [
-          "P3-Low",
-          "documentation",
-          "domain/api",
-          "size/M"
-        ],
-        "traps": [
-          "L2"
-        ]
-      },
-      {
-        "id": "dark-mode-toggle",
-        "gold": [
-          "P2-Medium",
-          "size/S",
-          "team/frontend",
-          "team/qa"
-        ],
-        "answer": [
-          "P2-Medium",
-          "feature",
-          "size/S",
-          "team/frontend",
-          "team/qa"
-        ],
-        "traps": [
-          "L4"
-        ]
       },
       {
         "id": "order-history-monorepo",
@@ -818,6 +778,7 @@
         ],
         "answer": [
           "P1-High",
+          "domain/api",
           "feature",
           "size/M",
           "team/backend",
@@ -826,83 +787,6 @@
         "traps": [
           "L2"
         ]
-      },
-      {
-        "id": "build-cache",
-        "gold": [
-          "P2-Medium",
-          "domain/ui",
-          "performance",
-          "size/XS",
-          "team/devops"
-        ],
-        "answer": [
-          "P2-Medium",
-          "performance",
-          "size/XS",
-          "team/devops"
-        ],
-        "traps": [
-          "L3"
-        ]
-      },
-      {
-        "id": "contributor-guide",
-        "gold": [
-          "P3-Low",
-          "documentation",
-          "domain/docs",
-          "domain/ui",
-          "size/M"
-        ],
-        "answer": [
-          "P3-Low",
-          "documentation",
-          "domain/docs",
-          "size/M"
-        ],
-        "traps": [
-          "L3"
-        ]
-      },
-      {
-        "id": "author-avatars",
-        "gold": [
-          "P1-High",
-          "domain/auth",
-          "feature",
-          "size/S",
-          "team/frontend"
-        ],
-        "answer": [
-          "P2-Medium",
-          "feature",
-          "size/S",
-          "team/frontend"
-        ],
-        "traps": [
-          "L3"
-        ]
-      },
-      {
-        "id": "status-wip-label",
-        "gold": [
-          "P1-High",
-          "domain/api",
-          "feature",
-          "size/L",
-          "team/backend",
-          "team/frontend"
-        ],
-        "answer": [
-          "P2-Medium",
-          "domain/api",
-          "feature",
-          "size/L",
-          "team/backend",
-          "team/frontend"
-        ],
-        "traps": []
       },
       {
         "id": "onboarding-checklist-okr",
@@ -914,30 +798,11 @@
           "team/frontend"
         ],
         "answer": [
-          "P2-Medium",
+          "P1-High",
           "feature",
           "size/L",
           "team/backend",
           "team/frontend",
-          "team/qa"
-        ],
-        "traps": []
-      },
-      {
-        "id": "key-rotation",
-        "gold": [
-          "P2-Medium",
-          "feature",
-          "size/M",
-          "team/backend",
-          "team/devops"
-        ],
-        "answer": [
-          "P2-Medium",
-          "feature",
-          "size/M",
-          "team/backend",
-          "team/devops",
           "team/qa"
         ],
         "traps": []
@@ -952,37 +817,13 @@
           "team/backend",
           "team/frontend"
         ],
-        "answer": [
-          "P2-Medium",
-          "domain/auth",
-          "feature",
-          "size/M",
-          "team/backend",
-          "team/frontend"
-        ],
-        "traps": []
-      },
-      {
-        "id": "zero-byte-upload",
-        "gold": [
-          "P2-Medium",
-          "bug",
-          "size/XS",
-          "team/backend"
-        ],
-        "answer": [
-          "P2-Medium",
-          "bug",
-          "size/XS",
-          "team/backend",
-          "team/qa"
-        ],
+        "answer": "invalid",
         "traps": []
       },
       {
         "id": "apple-pay-299-lines",
         "gold": [
-          "P1-High",
+          "P0-Critical",
           "domain/api",
           "domain/payment",
           "feature",
@@ -991,15 +832,7 @@
           "team/frontend",
           "team/qa"
         ],
-        "answer": [
-          "P1-High",
-          "domain/payment",
-          "feature",
-          "size/M",
-          "team/backend",
-          "team/frontend",
-          "team/qa"
-        ],
+        "answer": "invalid",
         "traps": []
       },
       {
@@ -1013,31 +846,11 @@
           "team/qa"
         ],
         "answer": [
-          "P2-Medium",
+          "P1-High",
           "domain/ui",
           "feature",
           "size/M",
-          "team/frontend",
-          "team/qa"
-        ],
-        "traps": []
-      },
-      {
-        "id": "unknown-report-404",
-        "gold": [
-          "P2-Medium",
-          "bug",
-          "domain/api",
-          "size/XS",
-          "team/backend"
-        ],
-        "answer": [
-          "P2-Medium",
-          "bug",
-          "domain/api",
-          "size/XS",
-          "team/backend",
-          "team/qa"
+          "team/frontend"
         ],
         "traps": []
       },
@@ -1045,58 +858,58 @@
         "id": "custom-date-formats-type-feature",
         "gold": [
           "P2-Medium",
+          "chore",
           "size/M"
         ],
         "answer": [
           "P2-Medium",
+          "chore",
           "size/M",
           "team/qa"
         ],
-        "traps": [
-          "L4"
-        ]
+        "traps": []
       }
     ],
     "labels": {
-      "n": 51,
-      "exact": 34,
-      "exactMatch": 0.667,
+      "n": 52,
+      "exact": 43,
+      "exactMatch": 0.827,
       "micro": {
-        "precision": 0.931,
-        "recall": 0.949,
-        "f1": 0.94
+        "precision": 0.976,
+        "recall": 0.923,
+        "f1": 0.949
       },
       "perLabel": {
         "P0-Critical": {
-          "support": 2,
-          "tp": 2,
+          "support": 10,
+          "tp": 9,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.9,
+          "f1": 0.947
+        },
+        "P1-High": {
+          "support": 16,
+          "tp": 15,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.938,
+          "f1": 0.968
+        },
+        "P2-Medium": {
+          "support": 15,
+          "tp": 15,
           "fp": 0,
           "fn": 0,
           "precision": 1,
           "recall": 1,
           "f1": 1
         },
-        "P1-High": {
-          "support": 8,
-          "tp": 3,
-          "fp": 0,
-          "fn": 5,
-          "precision": 1,
-          "recall": 0.375,
-          "f1": 0.545
-        },
-        "P2-Medium": {
-          "support": 27,
-          "tp": 27,
-          "fp": 5,
-          "fn": 0,
-          "precision": 0.844,
-          "recall": 1,
-          "f1": 0.915
-        },
         "P3-Low": {
-          "support": 14,
-          "tp": 14,
+          "support": 10,
+          "tp": 10,
           "fp": 0,
           "fn": 0,
           "precision": 1,
@@ -1112,9 +925,18 @@
           "recall": 1,
           "f1": 1
         },
+        "chore": {
+          "support": 5,
+          "tp": 5,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
         "dependencies": {
-          "support": 2,
-          "tp": 2,
+          "support": 3,
+          "tp": 3,
           "fp": 0,
           "fn": 0,
           "precision": 1,
@@ -1132,57 +954,57 @@
         },
         "domain/api": {
           "support": 6,
-          "tp": 4,
-          "fp": 0,
-          "fn": 2,
-          "precision": 1,
-          "recall": 0.667,
-          "f1": 0.8
-        },
-        "domain/auth": {
-          "support": 3,
-          "tp": 2,
+          "tp": 5,
           "fp": 0,
           "fn": 1,
           "precision": 1,
-          "recall": 0.667,
-          "f1": 0.8
+          "recall": 0.833,
+          "f1": 0.909
+        },
+        "domain/auth": {
+          "support": 2,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.5,
+          "f1": 0.667
         },
         "domain/docs": {
           "support": 7,
-          "tp": 6,
+          "tp": 7,
           "fp": 0,
-          "fn": 1,
+          "fn": 0,
           "precision": 1,
-          "recall": 0.857,
-          "f1": 0.923
+          "recall": 1,
+          "f1": 1
         },
         "domain/payment": {
           "support": 2,
-          "tp": 2,
-          "fp": 1,
-          "fn": 0,
-          "precision": 0.667,
-          "recall": 1,
-          "f1": 0.8
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.5,
+          "f1": 0.667
         },
         "domain/ui": {
-          "support": 3,
+          "support": 1,
           "tp": 1,
+          "fp": 0,
+          "fn": 0,
+          "precision": 1,
+          "recall": 1,
+          "f1": 1
+        },
+        "feature": {
+          "support": 13,
+          "tp": 11,
           "fp": 0,
           "fn": 2,
           "precision": 1,
-          "recall": 0.333,
-          "f1": 0.5
-        },
-        "feature": {
-          "support": 12,
-          "tp": 12,
-          "fp": 1,
-          "fn": 0,
-          "precision": 0.923,
-          "recall": 1,
-          "f1": 0.96
+          "recall": 0.846,
+          "f1": 0.917
         },
         "hotfix": {
           "support": 2,
@@ -1240,12 +1062,12 @@
         },
         "size/M": {
           "support": 14,
-          "tp": 14,
+          "tp": 12,
           "fp": 0,
-          "fn": 0,
+          "fn": 2,
           "precision": 1,
-          "recall": 1,
-          "f1": 1
+          "recall": 0.857,
+          "f1": 0.923
         },
         "size/S": {
           "support": 11,
@@ -1266,8 +1088,8 @@
           "f1": 1
         },
         "size/XS": {
-          "support": 19,
-          "tp": 19,
+          "support": 20,
+          "tp": 20,
           "fp": 0,
           "fn": 0,
           "precision": 1,
@@ -1276,12 +1098,12 @@
         },
         "team/backend": {
           "support": 22,
-          "tp": 22,
+          "tp": 20,
           "fp": 1,
-          "fn": 0,
-          "precision": 0.957,
-          "recall": 1,
-          "f1": 0.978
+          "fn": 2,
+          "precision": 0.952,
+          "recall": 0.909,
+          "f1": 0.93
         },
         "team/devops": {
           "support": 7,
@@ -1294,25 +1116,34 @@
         },
         "team/frontend": {
           "support": 9,
-          "tp": 9,
+          "tp": 7,
           "fp": 1,
-          "fn": 0,
-          "precision": 0.9,
-          "recall": 1,
-          "f1": 0.947
+          "fn": 2,
+          "precision": 0.875,
+          "recall": 0.778,
+          "f1": 0.824
         },
         "team/qa": {
           "support": 6,
-          "tp": 6,
-          "fp": 6,
-          "fn": 0,
+          "tp": 3,
+          "fp": 3,
+          "fn": 3,
           "precision": 0.5,
-          "recall": 1,
-          "f1": 0.667
+          "recall": 0.5,
+          "f1": 0.5
         },
         "team/security": {
           "support": 2,
-          "tp": 2,
+          "tp": 1,
+          "fp": 0,
+          "fn": 1,
+          "precision": 1,
+          "recall": 0.5,
+          "f1": 0.667
+        },
+        "testing": {
+          "support": 1,
+          "tp": 1,
           "fp": 0,
           "fn": 0,
           "precision": 1,
@@ -1323,24 +1154,24 @@
     },
     "byCategory": {
       "type": {
-        "n": 51,
+        "n": 52,
         "agree": 50
       },
       "priority": {
-        "n": 51,
-        "agree": 46
+        "n": 52,
+        "agree": 50
       },
       "size": {
-        "n": 51,
-        "agree": 51
+        "n": 52,
+        "agree": 50
       },
       "team": {
-        "n": 51,
-        "agree": 44
+        "n": 52,
+        "agree": 43
       },
       "domain": {
-        "n": 51,
-        "agree": 44
+        "n": 52,
+        "agree": 50
       }
     }
   }

@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { loadFixtures } from "../evals/lib/fixtures.mjs";
 import { referenceResults } from "../evals/lib/reference.mjs";
-import { blockStatus, loadResults } from "../evals/lib/report.mjs";
+import { blockStatus, loadBaseline, loadResults } from "../evals/lib/report.mjs";
 import { scoreSkill } from "../evals/lib/score.mjs";
 
 const { fixtures, sha256 } = loadFixtures();
@@ -22,8 +22,21 @@ for (const r of results) {
 }
 
 test("the generated result blocks in the READMEs are up to date", () => {
-  for (const block of blockStatus({ reference: referenceResults(fixtures), results })) {
+  for (const block of blockStatus({ fixtures, reference: referenceResults(fixtures), results, baseline: loadBaseline() })) {
     assert.ok(block.current !== null, `${block.file}: missing the ${block.name} markers`);
     assert.equal(block.current, block.expected, `${block.file} (${block.name}) is stale — run node evals/report.mjs --write`);
   }
+});
+
+test("the PR #7 baseline is intact: four runs over the 51 original fixtures", () => {
+  const baseline = loadBaseline();
+  assert.equal(baseline.results.length, 4);
+  for (const r of baseline.results) {
+    assert.equal(r.predictions.length, 51, r.file);
+    assert.equal(r.summary.n, 51, r.file);
+    assert.ok(Object.keys(baseline.gold).length === 51);
+    assert.ok(r.predictions.every((p) => p.id in baseline.gold), `${r.file}: unknown fixture id`);
+  }
+  assert.equal(baseline.traps["gh-prioritizer"].length, 15);
+  assert.equal(baseline.traps["pr-labeler"].length, 20);
 });
