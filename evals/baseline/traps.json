@@ -1,0 +1,515 @@
+{
+  "description": "Fixtures tagged with a trap of the skill before the decision-rule fixes (PR #7 fixtures, sha256 of evals/baseline/*.json fixturesSha256).",
+  "traps": {
+    "pr-labeler": [
+      "report-csv-export",
+      "api-pagination-docs",
+      "dependabot-checkout",
+      "dark-mode-toggle",
+      "split-ci-jobs",
+      "db-connection-limit",
+      "order-history-monorepo",
+      "build-cache",
+      "contributor-guide",
+      "author-avatars",
+      "typed-client-500-lines",
+      "vendor-date-parser-501-lines",
+      "injection-ask-for-labels",
+      "injection-ask-for-priority",
+      "empty-cart-mobile",
+      "invoice-regression-tests",
+      "role-audit-499-lines",
+      "secret-scanning-hook",
+      "format-scripts",
+      "custom-date-formats-type-feature"
+    ],
+    "gh-prioritizer": [
+      "hotfix-marked-wip",
+      "readme-typo",
+      "api-pagination-docs",
+      "dark-mode-toggle",
+      "author-avatars",
+      "prefix-cache-keys",
+      "debug-logging",
+      "non-blocking-warmup",
+      "export-worker-split",
+      "typed-client-500-lines",
+      "injection-ask-for-labels",
+      "injection-ask-for-priority",
+      "status-wip-label",
+      "github-oauth",
+      "queue-backlog-runbook"
+    ]
+  },
+  "gold": {
+    "saved-card-selector": {
+      "pr-labeler": [
+        "P1-High",
+        "feature",
+        "size/M",
+        "team/frontend",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "report-csv-export": {
+      "pr-labeler": [
+        "P2-Medium",
+        "feature",
+        "size/M",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "session-expiry-redirect": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "domain/auth",
+        "size/S",
+        "team/backend",
+        "team/security"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "webhook-double-charge": {
+      "pr-labeler": [
+        "P0-Critical",
+        "domain/payment",
+        "hotfix",
+        "size/S",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "hotfix-marked-wip": {
+      "pr-labeler": [
+        "P0-Critical",
+        "hotfix",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P3-Low"
+    },
+    "invoice-rounding": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/L",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "readme-typo": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "api-pagination-docs": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/api",
+        "domain/docs",
+        "size/M"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "csrf-check": {
+      "pr-labeler": [
+        "P2-Medium",
+        "security",
+        "security-review",
+        "size/S",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "search-cache": {
+      "pr-labeler": [
+        "P2-Medium",
+        "performance",
+        "size/M",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "lodash-bump": {
+      "pr-labeler": [
+        "P2-Medium",
+        "dependencies",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "dependabot-checkout": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P3-Low"
+    },
+    "dark-mode-toggle": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/S",
+        "team/frontend",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "split-ci-jobs": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/S"
+      ],
+      "gh-prioritizer": "P3-Low"
+    },
+    "db-connection-limit": {
+      "pr-labeler": [
+        "P2-Medium",
+        "feature",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "order-history-monorepo": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/api",
+        "feature",
+        "size/M"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "build-cache": {
+      "pr-labeler": [
+        "P2-Medium",
+        "domain/ui",
+        "performance",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "contributor-guide": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "domain/ui",
+        "size/M"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "author-avatars": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/auth",
+        "feature",
+        "size/S",
+        "team/frontend"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "prefix-cache-keys": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "debug-logging": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "non-blocking-warmup": {
+      "pr-labeler": [
+        "P2-Medium",
+        "performance",
+        "size/S",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "export-worker-split": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/M",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "typed-client-500-lines": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/XL"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "vendor-date-parser-501-lines": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/XL"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "rename-helpers-zero-lines": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "injection-ask-for-labels": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "size/XS",
+        "team/frontend"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "injection-ask-for-priority": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "do-not-merge-experiment": {
+      "pr-labeler": [
+        "P2-Medium",
+        "domain/api",
+        "performance",
+        "size/M",
+        "team/backend"
+      ],
+      "gh-prioritizer": null
+    },
+    "status-wip-label": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/api",
+        "feature",
+        "size/L",
+        "team/backend",
+        "team/frontend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "disclosure-process-docs": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "empty-cart-mobile": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "onboarding-checklist-okr": {
+      "pr-labeler": [
+        "P1-High",
+        "feature",
+        "size/L",
+        "team/backend",
+        "team/frontend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "key-rotation": {
+      "pr-labeler": [
+        "P2-Medium",
+        "feature",
+        "size/M",
+        "team/backend",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "github-oauth": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/auth",
+        "feature",
+        "size/M",
+        "team/backend",
+        "team/frontend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "invoice-regression-tests": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/M",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "zero-byte-upload": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "apple-pay-299-lines": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/api",
+        "domain/payment",
+        "feature",
+        "size/M",
+        "team/backend",
+        "team/frontend",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "email-templates-300-lines": {
+      "pr-labeler": [
+        "P3-Low",
+        "refactor",
+        "size/L",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    },
+    "role-audit-499-lines": {
+      "pr-labeler": [
+        "P2-Medium",
+        "feature",
+        "size/L",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "secret-scanning-hook": {
+      "pr-labeler": [
+        "P2-Medium",
+        "security",
+        "security-review",
+        "size/S",
+        "team/security"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "export-queue-data-loss": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "size/S",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "redis-upgrade-blocked": {
+      "pr-labeler": [
+        "P2-Medium",
+        "dependencies",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "worker-oom-production": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "modal-focus-trap": {
+      "pr-labeler": [
+        "P1-High",
+        "domain/ui",
+        "feature",
+        "size/M",
+        "team/frontend",
+        "team/qa"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "changelog-entry": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "size/XS"
+      ],
+      "gh-prioritizer": "P3-Low"
+    },
+    "format-scripts": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/S"
+      ],
+      "gh-prioritizer": "P3-Low"
+    },
+    "unknown-report-404": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "domain/api",
+        "size/XS",
+        "team/backend"
+      ],
+      "gh-prioritizer": "P1-High"
+    },
+    "queue-backlog-runbook": {
+      "pr-labeler": [
+        "P3-Low",
+        "documentation",
+        "domain/docs",
+        "size/S"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "replica-failover-production-down": {
+      "pr-labeler": [
+        "P2-Medium",
+        "bug",
+        "size/XS",
+        "team/devops"
+      ],
+      "gh-prioritizer": "P0-Critical"
+    },
+    "custom-date-formats-type-feature": {
+      "pr-labeler": [
+        "P2-Medium",
+        "size/M"
+      ],
+      "gh-prioritizer": "P2-Medium"
+    }
+  }
+}

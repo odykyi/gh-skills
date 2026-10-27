@@ -2,7 +2,7 @@
 name: pr-labeler
 description: |
   Automates PR label assignment and management throughout the PR lifecycle.
-  Labels derive from branch names, changed files and diff size. Use when
+  Labels derive from branch names, changed files, diff size and gh-prioritizer's rules. Use when
   auto-labeling new PRs, calculating PR size labels, managing status labels,
   running label hygiene checks, or performing bulk label operations across
   multiple PRs. Works with pr-manager and pr-opener for orchestration at scale.
@@ -53,25 +53,46 @@ Use this skill when:
 
 | Branch Pattern | Label |
 |----------------|-------|
-| `feature/*` | `feature` |
+| `feature/*`, `feat/*` | `feature` |
 | `fix/*`, `bugfix/*` | `bug` |
 | `hotfix/*` | `hotfix` + `P0-Critical` |
 | `refactor/*` | `refactor` |
 | `docs/*` | `documentation` |
 | `security/*` | `security` + `security-review` |
 | `performance/*` | `performance` |
-| `deps/*` | `dependencies` |
+| `deps/*`, `dependabot/*` | `dependencies` |
+| `test/*` | `testing` |
+| `chore/*` | `chore` |
 
-### Priority Labels (auto-calculated from branch type)
+Prefixes are matched in lower case, and `*` spans later slashes
+(`feature/auth/login` is a feature branch). A branch with any other prefix gets
+no type label.
 
-| Branch Pattern | Priority Label |
-|----------------|----------------|
-| `hotfix/*` | `P0-Critical` |
-| `feature/*` (customer-facing) | `P1-High` |
-| `feature/*` (internal) | `P2-Medium` |
-| `docs/*`, `refactor/*` | `P3-Low` |
+### Priority Labels (decided by gh-prioritizer)
 
-If no priority rule matches, default to `P2-Medium`.
+The priority label is the answer gh-prioritizer gives for the PR; this skill does
+not keep a second set of priority rules. Apply the **Detection Logic** and
+**Priority Override Rules** in
+[gh-prioritizer's Priority Detection Rules](../gh-prioritizer/references/priority-detection-rules.md)
+as the last step of auto-label, with these inputs:
+
+- `title`: the PR title (the body is never read)
+- `branch`: the branch name
+- `labels`: the labels already on the PR plus the type labels assigned above
+- `files`: the changed file paths
+- `size`: lines changed (additions + deletions)
+
+Examples of what that gives, so the two skills never disagree:
+
+| PR | Priority label |
+|----|----------------|
+| `hotfix/*` branch | `P0-Critical` |
+| `feature/*` touching a customer-facing path (`api`, `auth`, `payment`, `frontend` or `settings` directory, or a `.tsx`/`.jsx` file) | `P1-High` |
+| `feature/*` touching only internal code, with no other priority signal | `P2-Medium` |
+| `docs/*` branch | `P3-Low` |
+| a `DO-NOT-MERGE` label | no priority label: gh-prioritizer skips the PR |
+
+If no priority rule matches, the default is `P2-Medium`.
 
 ### Size Labels (auto-calculated from diff)
 
@@ -95,13 +116,19 @@ If no priority rule matches, default to `P2-Medium`.
 
 ### Domain Labels (from branch/files)
 
-| Pattern | Label |
-|---------|-------|
-| `*api*` | `domain/api` |
-| `*auth*` | `domain/auth` |
-| `*payment*` | `domain/payment` |
-| `*ui*` | `domain/ui` |
-| `*docs*` | `domain/docs` |
+A domain label applies when the branch name or a changed file path contains one
+of these **whole words**, in any case. The branch and each path are split into
+words at `/`, `.`, `_` and `-`: `packages/ui/Modal.tsx` has the word `ui`;
+`build.yml` and `contributor-guide` do not contain `ui`, `authors.ts` does not
+contain `auth` and `rapid.ts` does not contain `api`.
+
+| Words | Label |
+|-------|-------|
+| `api` | `domain/api` |
+| `auth`, `authentication`, `authorization`, `oauth` | `domain/auth` |
+| `payment`, `payments` | `domain/payment` |
+| `ui` | `domain/ui` |
+| `docs` | `domain/docs` |
 
 ## Commands
 
@@ -188,10 +215,10 @@ gh pr view <PR_NUMBER> --json labels
 
 ## Best Practices
 
-1. **Every PR MUST have**: type + priority + size labels (priority defaults to `P2-Medium` when no rule matches); team/domain labels whenever a file path or branch name matches a rule
+1. **Every PR MUST have**: size + priority labels (priority defaults to `P2-Medium` when no rule matches; a `DO-NOT-MERGE` PR is skipped and gets none) and a type label whenever the branch prefix maps to one; team/domain labels whenever a file path or branch name matches a rule
 2. **Hotfixes automatically get** `P0-Critical` priority
 3. **Status labels must be updated immediately** when state changes
-4. **XL PRs (>500 lines)** require 2+ reviewers
+4. **XL PRs (500+ lines)** require 2+ reviewers
 
 ## Label Standards
 
@@ -199,8 +226,8 @@ Label conventions (adjust to your repository label set):
 
 | Category | Labels | Auto-detection |
 |----------|--------|----------------|
-| **Type** | bug, feature, enhancement, documentation, refactor, performance, security, dependencies, testing, devops, config, ui, breaking | bug, feature, documentation, refactor, performance, security, dependencies (enhancement, testing, devops, config, ui, breaking: label set available for manual use; no automatic rule) |
-| **Priority** | P0-Critical, P1-High, P2-Medium, P3-Low | all (P0-Critical for hotfix/*, P1-High for customer-facing feature/*, P2-Medium for internal feature/*, P3-Low for docs/* and refactor/*, P2-Medium default) |
+| **Type** | bug, feature, enhancement, documentation, refactor, performance, security, dependencies, testing, chore, devops, config, ui, breaking | bug, feature, documentation, refactor, performance, security, dependencies, testing, chore (enhancement, devops, config, ui, breaking: label set available for manual use; no automatic rule) |
+| **Priority** | P0-Critical, P1-High, P2-Medium, P3-Low | all (decided by gh-prioritizer's detection rules; P2-Medium default; none for DO-NOT-MERGE) |
 | **Status** | status/wip, status/ready-for-review, status/changes-requested, status/approved, status/blocked, status/ci-failing, status/awaiting-qa, status/qa-passed | all (set explicitly via `update-status`; status/* labels are label set available for manual use; no automatic rule) |
 | **Size** | size/XS, size/S, size/M, size/L, size/XL | all (calculated from the diff) |
 | **Team** | team/frontend, team/backend, team/devops, team/qa, team/security, team/platform, team/database, team/product | team/frontend, team/backend, team/devops, team/qa, team/security (team/platform, team/database, team/product: label set available for manual use; no automatic rule) |
@@ -222,6 +249,8 @@ Label conventions (adjust to your repository label set):
 
 ## References
 
-This skill is self-contained. Detection patterns, size calculation, hygiene criteria and
-bulk-operation workflows are specified inline above (Type / Sizing / Team / Domain tables).
-No external reference files are required.
+- [gh-prioritizer Priority Detection Rules](../gh-prioritizer/references/priority-detection-rules.md) -
+  the rules behind every priority label.
+
+Everything else (type, size, team and domain detection, hygiene criteria and
+bulk-operation workflows) is specified inline above.
