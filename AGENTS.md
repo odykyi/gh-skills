@@ -51,6 +51,8 @@ See [`docs/creating-skills.md`](./docs/creating-skills.md) for the full checklis
 | `assets/pr-lifecycle.dot` | Graphviz source for the flow diagram |
 | `assets/build-diagram.sh` | Renders the diagram and injects the animation |
 | `scripts/validate-skills.mjs` | The linter CI runs |
+| `evals/` | Fixtures, reference implementations and LLM evals for pr-labeler and gh-prioritizer — see [`evals/README.md`](./evals/README.md) |
+| `test/` | Unit tests for the evals (`node --test`) |
 | `rules/AGENTS.github.md` | Rules template for repos that use these skills |
 | `template/skill-template.md` | Template for a new skill |
 | `install.sh` | Symlink installer for any agent |
@@ -61,6 +63,8 @@ See [`docs/creating-skills.md`](./docs/creating-skills.md) for the full checklis
 
 ```bash
 node scripts/validate-skills.mjs   # validate the collection
+npm test                           # validator + eval unit tests + reference eval + README sync
+npm run eval:llm -- --model haiku  # re-measure model agreement after changing a decision skill
 ./assets/build-diagram.sh           # rebuild assets/pr-lifecycle.svg (needs graphviz)
 gh pr review <n> --request-changes  # review a PR in this repo like the skills say to
 ```

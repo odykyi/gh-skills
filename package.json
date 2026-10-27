@@ -7,7 +7,10 @@
   "scripts": {
     "validate": "node scripts/validate-skills.mjs",
     "diagram": "./assets/build-diagram.sh",
-    "test": "node scripts/validate-skills.mjs"
+    "test": "node scripts/validate-skills.mjs && node --test test/*.test.mjs && node evals/run-reference.mjs && node evals/report.mjs --check",
+    "eval": "node evals/run-reference.mjs",
+    "eval:llm": "node evals/run-llm.mjs",
+    "eval:report": "node evals/report.mjs"
   },
   "engines": {
     "node": ">=18"

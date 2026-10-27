@@ -33,6 +33,8 @@ template/skill-template.md          # starting point for a new skill
 docs/                                 # creating skills, agent support, troubleshooting
 assets/                               # the animated diagrams (Graphviz source + SVG)
 scripts/validate-skills.mjs           # the linter CI runs
+evals/                                # evals for the decision skills (pr-labeler, gh-prioritizer)
+test/                                 # unit tests for the evals
 .claude-plugin/marketplace.json       # Claude Code plugin marketplace
 install.sh                            # symlink installer for any agent
 llms.txt                              # machine-readable index

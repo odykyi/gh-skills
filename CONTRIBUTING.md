@@ -30,6 +30,11 @@ Same rules, plus:
 - If you change a command, say in the PR description which command you ran and
   what it printed.
 - If you fix a contradiction between two skills, fix both and say so.
+- If you change a rule in `pr-labeler` or `gh-prioritizer`, change the
+  reference implementation in `evals/lib/` and the gold answers it affects in
+  `evals/fixtures/pull-requests.json`. `npm test` fails until they agree.
+  Re-run `npm run eval:llm` if you can, so the recorded model agreement
+  reflects the new text. See [`evals/README.md`](./evals/README.md).
 
 ## Style
 

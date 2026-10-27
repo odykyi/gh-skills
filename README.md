@@ -266,6 +266,39 @@ first section of every one of them, and the build fails if it is removed.
 
 ---
 
+## Measured: do the rules mean what they say?
+
+Two skills decide something from pull request data: pr-labeler picks labels
+and gh-prioritizer picks a priority. Their rules are markdown tables and code
+blocks that an agent applies by reading, so [`evals/`](./evals) tests them
+the way you would test code. It runs 51 hand-labelled pull requests against
+three answerers: the documented algorithm executed verbatim, a reference
+implementation of every rule, and an LLM given the skill text.
+
+<!-- evals-summary:start -->
+| Skill | Answered by | Agrees with gold | Clean fixtures | Trap fixtures | Notes |
+| --- | --- | --- | --- | --- | --- |
+| pr-labeler | reference implementation | 51/51 (100%) | 31/31 (100%) | 20/20 (100%) |  |
+| gh-prioritizer | documented algorithm, run verbatim | 6/51 (12%) | 5/36 (14%) | 1/15 (7%) | throws `TypeError` on 45 |
+| gh-prioritizer | reference implementation | 51/51 (100%) | 36/36 (100%) | 15/15 (100%) |  |
+
+On the same 51 pull requests, pr-labeler's priority label and gh-prioritizer's priority differ 38 times.
+<!-- evals-summary:end -->
+
+Two findings need no model to reproduce. First, the priority algorithm in
+gh-prioritizer's reference file, run exactly as printed, throws `TypeError:
+files.some is not a function` on every pull request that gets past the
+overrides: it hands a rule written for the file list a single label string.
+Second, pr-labeler and gh-prioritizer both assign a priority, and on most pull
+requests they assign different ones.
+
+The method, per-label scores, every disagreement with the model's own reason,
+and the 17 ambiguities the harness found are in
+[`evals/README.md`](./evals/README.md). `npm test` runs the reference eval in
+CI and fails if these numbers drift from the recorded answers.
+
+---
+
 ## Install
 
 <a id="install"></a>
@@ -412,6 +445,8 @@ template/        template for a new skill
 docs/            creating skills, agent support, troubleshooting
 assets/          the diagrams (Graphviz source + animated SVG)
 scripts/         the linter CI runs
+evals/           fixtures, reference implementations and LLM evals for the decision skills
+test/            unit tests for the evals (node --test)
 install.sh       symlink installer for any agent
 llms.txt         machine-readable index
 SPEC.md          the contract this collection makes
