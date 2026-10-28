@@ -69,6 +69,18 @@ step that makes the loop a loop: with no sub-sessions there is nothing to drive.
 - Say in the cycle report which sub-sessions you started. If you started none
   because every item already has one, say that instead.
 
+Every open PR gets an owner, including a PR that only waits for a review or an
+approval: its owner reviews, answers threads and reports "ready" or the exact
+blocker. A PR with no blocker is not a reason to start nothing.
+
+Spawn gate: do not go on to step 2 until each open PR has a live owner, up to
+ten at a time (the ten oldest first, the rest next cycle). If a spawn call fails
+or is denied, try the other mechanism once. If that also fails, stop the cycle
+and report which PRs have no owner and why. Never do the PR's work in the
+coordinating thread instead, and never end a cycle with open PRs and no owner
+without saying so. If `start_session` is only listed as a deferred tool, load
+it before calling it.
+
 A brief for a PR that belongs to another contributor's fork tells the
 sub-session to push only to a branch the user has allowed, and to report back
 rather than force anything.
@@ -149,6 +161,7 @@ so the trend toward zero is visible from one cycle to the next.
 
 | Situation | What to do |
 |-----------|-----------|
+| An open PR has no owner sub-session | Start one this cycle (step 1b), retry once with the other mechanism, else report it. Never fix it inline |
 | A sub-session does not start on a message | Mark it "failed to start", resend once next cycle, then report it |
 | A PR merged with red CI | Reopen the question: the sub-session is not finished, open a follow-up |
 | `gh` is not authenticated | Tell the user to run `gh auth login` and stop |
