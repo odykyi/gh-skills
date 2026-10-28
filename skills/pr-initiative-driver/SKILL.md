@@ -115,6 +115,32 @@ gh pr view <n> --json mergeable,reviewDecision,statusCheckRollup,closingIssuesRe
 A PR with `reviewDecision` `REVIEW_REQUIRED` or `CHANGES_REQUESTED` is not ready,
 whatever its title says.
 
+A branch that is only behind or red because of the base branch is updated with
+`gh api -X PUT repos/<owner>/<repo>/pulls/<n>/update-branch`: it needs no
+checkout and no disk. A required-check ruleset with
+`strict_required_status_checks_policy` also needs this after every merge into
+the base branch, so merge PRs one at a time and update the next.
+
+### Step 4b: Approval gate (when nothing is left but humans)
+
+If every remaining PR is green and mergeable and the only blocker is
+`reviewDecision` (the ruleset needs N approvals, a code owner, or approval after
+the last push), the loop cannot reach zero by itself. Do not keep cycling and do
+not go quiet. In the same cycle report, print one table: PR, what it changes,
+CI state, approvals missing, and who may supply them (read the ruleset with
+`gh api repos/<owner>/<repo>/rulesets` and `.github/CODEOWNERS`). Then ask the
+user once which route to take: (a) they or a second reviewer approve and the
+coordinator merges one at a time in queue order, or (b) they explicitly
+authorize their own bypass for named PRs. Only (b), said in their own words
+for those PRs, allows a bypass merge; the coordinator never approves a PR and
+never assumes (b) from "merge all". After the answer, do not ask again.
+
+### Step 4c: Preflight
+
+Before spawning, check free disk space with `df -h /private/tmp`. Under 2 GiB
+free, owners get no worktree: they work through the GitHub API or one shared
+worktree at a time, and remove it when done. Report the low disk to the user.
+
 ### Step 5: Verify before closing anything
 
 A sub-session is finished only when all three hold, checked on GitHub:
