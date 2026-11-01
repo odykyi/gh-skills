@@ -18,6 +18,7 @@
         "./skills/gh-prioritizer",
         "./skills/gh-project-orchestrator",
         "./skills/pr-commenter",
+        "./skills/pr-fast-lane",
         "./skills/pr-feedback-handler",
         "./skills/pr-initiative-driver",
         "./skills/pr-labeler",
