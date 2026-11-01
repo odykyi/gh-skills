@@ -140,10 +140,11 @@ closes the loop.
 | **Plan the work** | [gh-project-orchestrator](./skills/gh-project-orchestrator/SKILL.md) — Projects v2, epics, linked tasks |
 | **Know what is urgent** | [gh-prioritizer](./skills/gh-prioritizer/SKILL.md) — scores and re-scores the whole board |
 | **See the queue at a glance** | [pr-queue-digest](./skills/pr-queue-digest/SKILL.md) — read-only buckets: no issue, red CI, changes requested, ready |
+| **Make the whole queue merge itself** | [pr-fast-lane](./skills/pr-fast-lane/SKILL.md) — owners verify and auto-merge, humans review after the merge, fixes planned now / later / post-later |
 | **Keep sub-sessions moving to zero open issues** | [pr-initiative-driver](./skills/pr-initiative-driver/SKILL.md) — the repeating cycle: decide, unblock, merge ready PRs, verify "done" |
 | **Get AI on every PR** | [gh-pr-review-buttons](./skills/gh-pr-review-buttons/SKILL.md) — Grok / Claude / Codex badges on every PR |
 
-Every skill is self-contained. Take one, take all fourteen.
+Every skill is self-contained. Take one, take all fifteen.
 
 ---
 

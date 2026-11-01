@@ -256,6 +256,7 @@ const READS_THIRD_PARTY = [
   "pr-workflow-orchestrator",
   "pr-queue-digest",
   "pr-initiative-driver",
+  "pr-fast-lane",
   "gh-prioritizer",
   "gh-project-orchestrator",
 ];
