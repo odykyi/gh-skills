@@ -125,9 +125,29 @@ gh pr list --state open --json number,createdAt,mergeStateStatus,reviewDecision
 gh pr list --state merged --search "merged:>=<YYYY-MM-DD>" --json number,createdAt,mergedAt
 ```
 
+On a shared runner pool, CI time is mostly queue time. Count queued against
+running before tuning any job:
+
+```bash
+gh api "repos/<owner>/<repo>/actions/runs?status=queued&per_page=1" --jq .total_count
+gh api "repos/<owner>/<repo>/actions/runs?status=in_progress&per_page=1" --jq .total_count
+```
+
+Many queued and few running means the pool is full: updating every branch at
+once makes it worse, so update them in small batches.
+
 Then shorten the slowest wait. Usual wins, in order of size: auto-merge instead
 of a merge loop, a batching merge queue, path-filtered CI, cancel-in-progress on
 new pushes. Label estimates as estimates; report only measured gains.
+
+Lock the win in with a CI gate, so slow CI cannot come back: every workflow
+that runs on pull requests cancels superseded runs, and no job may set
+`timeout-minutes` above a budget (30 is a common one). Before lowering a limit,
+measure the job's slowest recent successful run:
+
+```bash
+gh run list --workflow <file>.yml --status success --limit 30 --json createdAt,updatedAt
+```
 
 ### Step 5: Automate
 
