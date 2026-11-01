@@ -74,6 +74,20 @@ what breaks if it is removed. Typical findings:
   date" just forces a rebase and a full CI rerun after every merge.
 - `require_last_push_approval`: every fix push by an agent invalidates the
   approval it just earned.
+- A `code_scanning` rule that names a tool, or a CodeQL category, that never
+  uploads a result on pull requests: every PR waits forever, so only `--admin`
+  merges ever land. Compare what the base branch has with what a PR has:
+
+```bash
+gh api "repos/<owner>/<repo>/code-scanning/analyses?ref=refs/heads/main&per_page=50" \
+  --jq '[.[] | "\(.tool.name) \(.category)"] | unique'
+gh api "repos/<owner>/<repo>/code-scanning/analyses?ref=refs/pull/<n>/merge&per_page=50" \
+  --jq '[.[] | "\(.tool.name) \(.category)"] | unique'
+```
+
+A gate that verifies nothing on a PR only blocks. Either make the scan run on
+every PR (path-filtered scans are the usual cause) or, with the user's yes,
+drop that tool from the rule.
 
 ### Step 2: Delete
 
@@ -186,7 +200,8 @@ Report every finding in one of three columns, fastest win first.
 |-----------|-----------|
 | `gh api -X PUT .../rulesets` returns 422 | Drop `null` parameters from the body and retry once; then report the field |
 | `--auto` says the strategy is set by the queue | Expected: the queue picks the method; confirm with `autoMergeRequest` |
-| PR stays `BLOCKED` with green checks | Check unresolved review threads and code-scanning alerts |
+| PR stays `BLOCKED` with green checks | Try `gh pr merge <n>` and read the reason; check unresolved threads and the code-scanning comparison in step 1 |
+| "Code scanning is still expecting 1 result from <tool>" | A required scan (or one category of it) is skipped on PRs; make it run on every PR |
 | A merged PR broke `main` | `gh pr revert <n>`, then a rule so it cannot recur |
 | The user declines changing the gate | Keep the old gate; do steps 3 to 5 only and say what stays slow |
 
