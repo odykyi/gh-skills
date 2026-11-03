@@ -17,15 +17,16 @@ Humans move from reviewing before the merge to reviewing after it.
 
 When the request is to fix, merge or release (not just to review or report),
 the first action is to start a self-paced loop. Do not wait until something
-is pending: invoke the `loop` skill with no interval and the user's request as
-the prompt, e.g. `/loop pr-fast-lane review prs fix merge <url> and release`.
-Every iteration runs "Drive the queue in a loop" below and ends with
-`ScheduleWakeup` (pass the same prompt back): about 300-600 s while CI, the
-merge queue or a release run is in flight, 1200 s otherwise. Never end a turn
+is pending: invoke the `loop` skill with a fixed interval and the user's request as
+the prompt, e.g. `/loop 10m pr-fast-lane review prs fix merge <url> and release`.
+A fixed interval creates a recurring cron job the user can see and cancel
+(`CronList`, `CronDelete`); a self-paced wakeup is invisible to them, so use it
+only when they ask for one. Say the job ID in the first reply. Every iteration
+runs "Drive the queue in a loop" below. Never end a turn
 with work left and no wakeup scheduled. A background watcher alone is not a
 loop: when it fires, you still have to schedule the next iteration.
 
-End the loop (`ScheduleWakeup` with `stop: true`) only when every PR is merged
+End the loop (`CronDelete` the job) only when every PR is merged
 or has a blocker only the user can clear, and the release, if one was asked
 for, is verified on every channel. That last turn reports the state; it does
 not ask the user to choose between ways forward (see "Decide, do not ask").
@@ -200,16 +201,33 @@ Each iteration:
    and the merge queue (`gh api graphql` on `repository.mergeQueue(branch:"main").entries`).
    Other agents and contributors push between iterations; a blocker seen last
    time may be gone (check unresolved threads again, do not trust old notes).
-2. For each PR, take the first true blocker and act on it yourself: red job from
-   a broken `main` -> one fix PR; conflict -> rebase in an own worktree; review
-   thread -> fix or reply, then resolve; green and `CLEAN` -> queue it.
+2. Work **every** open PR on **every** pass, drafts and other authors'
+   included, and clear **all** of its blockers, not only the first. A pass
+   that leaves a conflict or an unanswered comment it could have handled is
+   not finished:
+   - `mergeStateStatus` `DIRTY` (conflict): in an own worktree, merge the base
+     branch into the PR branch, resolve every conflict by reading both sides,
+     run the tests for the touched files, commit and push normally. If the
+     branch is on a fork without maintainer edits, post the exact conflicting
+     files on the PR instead. `BEHIND`: `gh pr update-branch <n>`.
+   - Every unresolved review thread, from humans and bots alike: list them with
+     the GraphQL `reviewThreads { isResolved }` query, read the full comment,
+     then either fix it (with a test) or reply with the reason it does not
+     apply. Resolve the thread only after the fix is pushed or the reply is
+     posted.
+   - A `CHANGES_REQUESTED` review whose points are all fixed on the current
+     head: check each point against the code, then dismiss it with the list
+     of where each one was fixed.
+   - Red job: read the failing case. Broken base branch -> one fix PR shared
+     by all; failure from this PR -> fix it on the branch.
+   - Green, `CLEAN`, nothing unresolved -> queue it (drafts stay drafts).
 3. Queue with `gh pr merge <n> --squash` (under a merge queue this enqueues;
    `--auto` can return silently without setting `autoMergeRequest`). Confirm the
    PR appears in the queue entries.
 4. A queue entry `UNMERGEABLE`: check whether another queued PR already carries
    the same change; if so close the duplicate, otherwise rebase it.
 5. Nothing left to act on but checks or the queue are still running: end the
-   iteration with `ScheduleWakeup` (300-600 s), never with a question or a
+   iteration and let the recurring loop job fire again, never with a question or a
    promise to "continue when it finishes". Never sleep-poll in the foreground.
 6. Stop when the queue is empty and every PR is merged or has a user-only
    blocker, then do the release step if asked (the repository's release skill or `docs/releasing.md`), against
