@@ -250,6 +250,7 @@ ways to land a PR. Pick with this table and keep going:
 | No standing admin-merge preference | Open the gate-fix PR, report the PR as blocked by it, and keep looping on the rest |
 | Queue reruns suites the PR already passed (same CI plus extra e2e) | Measure the queue entry's runs (Step 4), then open a PR that reuses the PR head's passing run and keep looping |
 | A draft is green with every thread resolved | Mark it ready (`gh pr ready <n>`) and queue it; a draft is not a reason to wait |
+| A release or PR run sits `queued` for runners | List `gh api "repos/<o>/<r>/actions/runs?status=queued"` and `status=in_progress`, then `gh run cancel` the runs that can no longer matter: queue (`merge_group`) runs of PRs already merged or dequeued, PR runs of merged branches, and base-branch push runs superseded by a newer commit. Never cancel the newest base-branch run, an open PR's latest run, or a release run |
 | Two PRs carry the same fix | Close the newer one as a duplicate |
 | A contributor PR is green, threads resolved | Merge it |
 | A PR needs real code work | Fix it in an own worktree, push, loop |
