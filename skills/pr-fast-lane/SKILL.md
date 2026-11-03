@@ -163,7 +163,7 @@ gh run list --event merge_group --limit 60 \
   --jq '.[] | select(.headBranch | test("pr-<n>-")) | "\(.name) \(.conclusion)"'
 ```
 
-Typical waste: a planner that picks legs by changed files on PRs but "keeps
+Typical waste: a matrix job that picks legs by changed files on PRs but "keeps
 the full set" in the queue, or a queue diff against `merge_group.base_sha`
 that relists the PR's own files. The fix: when the workflow already passed on
 the queued PR's current head, select legs from `git diff <pr head> HEAD` on
