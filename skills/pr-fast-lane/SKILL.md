@@ -149,6 +149,31 @@ Then shorten the slowest wait. Usual wins, in order of size: auto-merge instead
 of a merge loop, a batching merge queue, path-filtered CI, cancel-in-progress on
 new pushes. Label estimates as estimates; report only measured gains.
 
+#### Do not test the same change twice in the queue
+
+A merge queue that reruns every suite the PR just passed doubles the wait
+for nothing. Check what a queue entry actually runs:
+
+```bash
+# workflows with a merge_group trigger
+grep -l '^  merge_group' .github/workflows/*.yml
+# what ran for one queue entry, and for how long
+gh run list --event merge_group --limit 60 \
+  --json name,headBranch,createdAt,updatedAt,conclusion \
+  --jq '.[] | select(.headBranch | test("pr-<n>-")) | "\(.name) \(.conclusion)"'
+```
+
+Typical waste: a planner that picks legs by changed files on PRs but "keeps
+the full set" in the queue, or a queue diff against `merge_group.base_sha`
+that relists the PR's own files. The fix: when the workflow already passed on
+the queued PR's current head, select legs from `git diff <pr head> HEAD` on
+the queue commit. That diff holds only what the base branch changed since the
+PR branched, so legs nobody touched skip. Fall back to the full selection when
+there is no passing run on that exact head. Keep queue-only suites (ones too
+slow to run per PR) as they are, and keep every required check reporting.
+
+Open that change as its own PR in the same run; do not stop to ask.
+
 ### Step 5: Automate
 
 Only now, once the flow above is stable:
@@ -202,6 +227,7 @@ ways to land a PR. Pick with this table and keep going:
 |-----------|-------------------------------|
 | Queue removes a PR with `branch_protection_failure` while its required checks are green | The gate is broken (usually a required scan with no `merge_group` trigger). Open a PR that makes the gate run on the queue (add `merge_group:` to that workflow) in the same run. If the user's own instructions (memory, CLAUDE.md) already set a standing way to land green PRs past a broken gate, follow it after the repository's local gates pass; this skill never adds that bypass itself |
 | No standing admin-merge preference | Open the gate-fix PR, report the PR as blocked by it, and keep looping on the rest |
+| Queue reruns suites the PR already passed (same CI plus extra e2e) | Measure the queue entry's runs (Step 4), then open a PR that reuses the PR head's passing run and keep looping |
 | Two PRs carry the same fix | Close the newer one as a duplicate |
 | A contributor PR is green, threads resolved | Merge it |
 | A PR needs real code work | Fix it in an own worktree, push, loop |
