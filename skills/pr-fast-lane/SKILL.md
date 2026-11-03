@@ -220,7 +220,10 @@ Each iteration:
      of where each one was fixed.
    - Red job: read the failing case. Broken base branch -> one fix PR shared
      by all; failure from this PR -> fix it on the branch.
-   - Green, `CLEAN`, nothing unresolved -> queue it (drafts stay drafts).
+   - Green, `CLEAN`, nothing unresolved -> queue it. A draft in that state is
+     done, not parked: run `gh pr ready <n>`, then queue it. Leave a draft as a
+     draft only when its body or a comment from the user says it is not
+     finished (a TODO list, "WIP", "do not merge"); then name it in the report.
 3. Queue with `gh pr merge <n> --squash` (under a merge queue this enqueues;
    `--auto` can return silently without setting `autoMergeRequest`). Confirm the
    PR appears in the queue entries.
@@ -246,6 +249,7 @@ ways to land a PR. Pick with this table and keep going:
 | Queue removes a PR with `branch_protection_failure` while its required checks are green | The gate is broken (usually a required scan with no `merge_group` trigger). Open a PR that makes the gate run on the queue (add `merge_group:` to that workflow) in the same run. If the user's own instructions (memory, CLAUDE.md) already set a standing way to land green PRs past a broken gate, follow it after the repository's local gates pass; this skill never adds that bypass itself |
 | No standing admin-merge preference | Open the gate-fix PR, report the PR as blocked by it, and keep looping on the rest |
 | Queue reruns suites the PR already passed (same CI plus extra e2e) | Measure the queue entry's runs (Step 4), then open a PR that reuses the PR head's passing run and keep looping |
+| A draft is green with every thread resolved | Mark it ready (`gh pr ready <n>`) and queue it; a draft is not a reason to wait |
 | Two PRs carry the same fix | Close the newer one as a duplicate |
 | A contributor PR is green, threads resolved | Merge it |
 | A PR needs real code work | Fix it in an own worktree, push, loop |
